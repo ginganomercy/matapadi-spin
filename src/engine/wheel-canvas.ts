@@ -9,12 +9,7 @@ export interface WheelCanvasOptions {
 
 /**
  * Ultra-Vibrant High-Performance Canvas Wheel Renderer.
- * Features:
- * - Direct embedding of the official Matapadi Smart Agriculture Logo inside the center hub
- * - Bright, high-contrast, luminous agricultural aesthetic
- * - 3D Metallic golden outer rim with shiny chrome/gold rivets
- * - Radial high-legibility typography with dual-stroke contrast
- * - High-DPI auto-scaling & elastic pointer deflection
+ * Supports dynamic sector counts (4 core items: Ganci, Stiker, Refreshment, Zonk).
  */
 export class WheelCanvas {
   private readonly canvas: HTMLCanvasElement;
@@ -60,15 +55,11 @@ export class WheelCanvas {
     this.render();
   }
 
-  /**
-   * Resizes canvas buffer according to container and DPR for ultra-sharp rendering.
-   */
   public setupHighDpi(): void {
     const dpr = Math.max(window.devicePixelRatio || 1, CANVAS_CONFIG.DEFAULT_SCALE_DPR);
     const parent = this.canvas.parentElement;
     const availableWidth = parent ? parent.clientWidth : CANVAS_CONFIG.BASE_SIZE_PX;
 
-    // Scale responsively: fits gracefully on laptop screens without pushing spin button below fold
     this.displaySizePx = Math.min(CANVAS_CONFIG.BASE_SIZE_PX, Math.max(280, availableWidth - 20));
 
     this.canvas.width = this.displaySizePx * dpr;
@@ -109,9 +100,6 @@ export class WheelCanvas {
     return this.currentAngleRad;
   }
 
-  /**
-   * Master render sequence.
-   */
   public render(): void {
     const size = this.displaySizePx;
     const center = size / 2;
@@ -147,9 +135,6 @@ export class WheelCanvas {
     this.drawPointer(center, radius);
   }
 
-  /**
-   * Draws vibrant, high-contrast sector slices with subtle convex sheen.
-   */
   private drawWheelSlices(radius: number): void {
     const totalSectors = this.sectors.length;
     const arcStep = (Math.PI * 2) / totalSectors;
@@ -185,16 +170,13 @@ export class WheelCanvas {
     }
   }
 
-  /**
-   * Radial high-legibility typography & icons.
-   */
   private drawSectorContent(sector: WheelSector, midAngle: number, radius: number): void {
     this.ctx.save();
     this.ctx.rotate(midAngle);
 
     // Position along radial axis (facing inward from rim towards center)
-    const iconPosR = radius * 0.82;
-    const textStartR = radius * 0.63;
+    const iconPosR = radius * 0.81;
+    const textStartR = radius * 0.61;
 
     // 1. Draw Sector Icon
     this.ctx.save();
@@ -207,9 +189,9 @@ export class WheelCanvas {
     this.ctx.save();
     this.ctx.translate(textStartR, 0);
 
-    const isGoldMerch = sector.category === "merchandise";
-    const primaryTextColor = isGoldMerch ? "#0f172a" : "#ffffff";
-    const strokeOutlineColor = isGoldMerch ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.8)";
+    const isGold = sector.category === "refreshment";
+    const primaryTextColor = isGold ? "#0f172a" : "#ffffff";
+    const strokeOutlineColor = isGold ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.8)";
 
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
@@ -230,74 +212,79 @@ export class WheelCanvas {
       this.ctx.fillStyle = "#fef08a";
       this.ctx.fillText("COBA LAGI", 0, 18);
 
-    } else if (sector.category === "gantungan_kunci") {
-      this.ctx.font = "900 13px 'Inter', system-ui, sans-serif";
-      this.ctx.lineWidth = 2.8;
+    } else if (sector.category === "ganci") {
+      this.ctx.font = "900 20px 'Inter', system-ui, sans-serif";
+      this.ctx.letterSpacing = "1px";
+      this.ctx.lineWidth = 3.2;
       this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("GANTUNGAN", 0, -8);
-      this.ctx.strokeText("KUNCI", 0, 8);
+      this.ctx.strokeText("GANCI", 0, 0);
 
       this.ctx.fillStyle = primaryTextColor;
       this.ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
       this.ctx.shadowBlur = 4;
-      this.ctx.fillText("GANTUNGAN", 0, -8);
-      this.ctx.fillText("KUNCI", 0, 8);
+      this.ctx.fillText("GANCI", 0, 0);
 
       this.ctx.shadowBlur = 0;
-      this.ctx.font = "bold 9px 'Inter', sans-serif";
+      this.ctx.font = "bold 9.5px 'Inter', sans-serif";
       this.ctx.fillStyle = "#fde047";
-      this.ctx.fillText("SOUVENIR", 0, 22);
+      this.ctx.fillText("SOUVENIR", 0, 18);
 
-    } else {
-      this.ctx.font = "900 13.5px 'Inter', system-ui, sans-serif";
-      this.ctx.letterSpacing = "0.5px";
-      this.ctx.lineWidth = 2.8;
+    } else if (sector.category === "stiker") {
+      this.ctx.font = "900 20px 'Inter', system-ui, sans-serif";
+      this.ctx.letterSpacing = "1px";
+      this.ctx.lineWidth = 3.2;
       this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("MERCHANDISE", 0, -4);
+      this.ctx.strokeText("STIKER", 0, 0);
 
       this.ctx.fillStyle = primaryTextColor;
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-      this.ctx.shadowBlur = 3;
-      this.ctx.fillText("MERCHANDISE", 0, -4);
+      this.ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
+      this.ctx.shadowBlur = 4;
+      this.ctx.fillText("STIKER", 0, 0);
 
       this.ctx.shadowBlur = 0;
-      this.ctx.font = "900 9.5px 'Inter', sans-serif";
+      this.ctx.font = "bold 9.5px 'Inter', sans-serif";
+      this.ctx.fillStyle = "#bae6fd";
+      this.ctx.fillText("EXCLUSIVE", 0, 18);
+
+    } else {
+      // Refreshment
+      this.ctx.font = "900 16px 'Inter', system-ui, sans-serif";
+      this.ctx.letterSpacing = "0.5px";
+      this.ctx.lineWidth = 3.2;
+      this.ctx.strokeStyle = strokeOutlineColor;
+      this.ctx.strokeText("REFRESHMENT", 0, -2);
+
+      this.ctx.fillStyle = primaryTextColor;
+      this.ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+      this.ctx.shadowBlur = 4;
+      this.ctx.fillText("REFRESHMENT", 0, -2);
+
+      this.ctx.shadowBlur = 0;
+      this.ctx.font = "900 9px 'Inter', sans-serif";
       this.ctx.fillStyle = "#78350f";
-      this.ctx.fillText("★ HADIAH UTAMA ★", 0, 12);
+      this.ctx.fillText("★ SNACK & DRINK ★", 0, 15);
     }
 
     this.ctx.restore();
     this.ctx.restore();
   }
 
-  /**
-   * Draws vector icons on canvas slices with crisp high-DPI rendering.
-   */
   private drawSectorVectorIcon(category: string): void {
-    if (category === "merchandise") {
-      // 3D Gift Box
-      this.ctx.font = "24px system-ui";
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-      this.ctx.shadowBlur = 6;
-      this.ctx.fillText("🎁", 0, 0);
-    } else if (category === "gantungan_kunci") {
-      // Keychain / Tag
-      this.ctx.font = "24px system-ui";
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-      this.ctx.shadowBlur = 6;
+    this.ctx.font = "28px system-ui";
+    this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+    this.ctx.shadowBlur = 6;
+
+    if (category === "ganci") {
       this.ctx.fillText("🏷️", 0, 0);
+    } else if (category === "stiker") {
+      this.ctx.fillText("🔖", 0, 0);
+    } else if (category === "refreshment") {
+      this.ctx.fillText("🥤", 0, 0);
     } else {
-      // Agricultural Leaf / Sprout
-      this.ctx.font = "24px system-ui";
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-      this.ctx.shadowBlur = 6;
       this.ctx.fillText("🌱", 0, 0);
     }
   }
 
-  /**
-   * Draws decorative golden dual-line dividers between sectors.
-   */
   private drawSliceDividers(radius: number): void {
     const totalSectors = this.sectors.length;
     const arcStep = (Math.PI * 2) / totalSectors;
@@ -325,9 +312,6 @@ export class WheelCanvas {
     }
   }
 
-  /**
-   * Draws the outer rim with brilliant metallic gold sheen and bevels.
-   */
   private drawOuterRim(radius: number): void {
     const rimWidth = CANVAS_CONFIG.RIM_WIDTH_PX;
     const outerRadius = radius + rimWidth;
@@ -362,9 +346,6 @@ export class WheelCanvas {
     this.ctx.stroke();
   }
 
-  /**
-   * Draws shiny 3D brass/chrome rivets (pegs) around the rim.
-   */
   private drawRivets(radius: number): void {
     const pegCount = CANVAS_CONFIG.PEG_COUNT;
     const pegRadius = CANVAS_CONFIG.PEG_RADIUS_PX;
@@ -399,9 +380,6 @@ export class WheelCanvas {
     }
   }
 
-  /**
-   * Draws the prominent 3D Center Hub with official Matapadi Logo.
-   */
   private drawCenterHub(center: number): void {
     const hubRadius = CANVAS_CONFIG.CENTER_HUB_RADIUS_PX;
 
@@ -438,10 +416,8 @@ export class WheelCanvas {
     this.ctx.fillStyle = "#ffffff";
     this.ctx.fill();
 
-    // Clip to circle and draw official logo if loaded
     this.ctx.clip();
     if (this.isLogoLoaded && this.logoImage) {
-      // Draw logo with crisp padding
       const logoPadding = 4;
       const logoDrawSize = (innerRadius - logoPadding) * 2;
       this.ctx.drawImage(
@@ -452,7 +428,6 @@ export class WheelCanvas {
         logoDrawSize
       );
     } else {
-      // Clean fallback if image is still loading
       this.ctx.fillStyle = "#064e3b";
       this.ctx.fill();
       this.ctx.textAlign = "center";
@@ -477,16 +452,12 @@ export class WheelCanvas {
     this.ctx.fillStyle = glassSheen;
     this.ctx.fill();
 
-    // Gold inner border ring
     this.ctx.strokeStyle = "#f59e0b";
     this.ctx.lineWidth = 1.8;
     this.ctx.stroke();
     this.ctx.restore();
   }
 
-  /**
-   * Draws the prominent 3D Golden Pointer (Needle) at 12 o'clock with jewel pivot.
-   */
   private drawPointer(center: number, radius: number): void {
     const pointerW = CANVAS_CONFIG.POINTER_WIDTH_PX;
     const pointerH = CANVAS_CONFIG.POINTER_HEIGHT_PX;

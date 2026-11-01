@@ -36,8 +36,10 @@ export class ModalManager {
       this.titleElement.className = "text-xl font-black text-emerald-950";
       this.labelElement.textContent = result.label;
       this.labelElement.className =
-        result.category === "merchandise"
+        result.category === "refreshment"
           ? "text-2xl font-black text-amber-600 tracking-tight my-2"
+          : result.category === "stiker"
+          ? "text-2xl font-black text-sky-600 tracking-tight my-2"
           : "text-2xl font-black text-emerald-600 tracking-tight my-2";
       this.descElement.textContent = result.description;
       this.actionButton.textContent = "Klaim & Putar Lagi";

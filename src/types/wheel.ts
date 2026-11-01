@@ -1,9 +1,9 @@
 /**
  * Core type definitions for the Matapadi Wheel Spin application.
- * All types are strictly typed with zero use of `any`.
+ * Strictly typed with 4 distinct prize categories.
  */
 
-export type PrizeCategory = "gantungan_kunci" | "merchandise" | "zonk";
+export type PrizeCategory = "ganci" | "stiker" | "refreshment" | "zonk";
 
 export interface WheelSector {
   readonly id: string;
@@ -32,4 +32,3 @@ export interface SoundConfig {
   readonly isMuted: boolean;
   readonly masterVolume: number;
 }
-

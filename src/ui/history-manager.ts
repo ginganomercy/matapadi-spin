@@ -81,17 +81,17 @@ export class HistoryManager {
         let badgeClasses = "";
         let borderClass = "";
 
-        if (item.category === "merchandise") {
+        if (item.category === "refreshment") {
           iconSvg = `
             <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 shadow-xs">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
               </svg>
             </div>
           `;
           badgeClasses = "bg-amber-100 text-amber-900 border-amber-300 font-black";
           borderClass = "border-amber-400/40 hover:border-amber-400";
-        } else if (item.category === "gantungan_kunci") {
+        } else if (item.category === "ganci") {
           iconSvg = `
             <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
               <svg class="w-4 h-4 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -101,6 +101,16 @@ export class HistoryManager {
           `;
           badgeClasses = "bg-emerald-100 text-emerald-900 border-emerald-300 font-bold";
           borderClass = "border-emerald-400/40 hover:border-emerald-400";
+        } else if (item.category === "stiker") {
+          iconSvg = `
+            <div class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+              <svg class="w-4 h-4 text-sky-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+              </svg>
+            </div>
+          `;
+          badgeClasses = "bg-sky-100 text-sky-900 border-sky-300 font-bold";
+          borderClass = "border-sky-400/40 hover:border-sky-400";
         } else {
           iconSvg = `
             <div class="w-8 h-8 rounded-lg bg-rose-500 text-white flex items-center justify-center shrink-0 shadow-xs">
