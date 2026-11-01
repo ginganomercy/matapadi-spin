@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #f0fdf4;
+    color: #064e3b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+}
+
+/* Radiant agricultural ambient background — smooth, premium mesh glow */
+.bg-matapadi-glow {
+  background-color: #f6fbf8;
+  background-image: 
+    radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(245, 158, 11, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 50% 60%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #f0fdf4 0%, #f6fbf8 100%);
+  background-size: 100% 100%;
+}
+
+/* Custom glowing pulse for active spin trigger */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.5), 0 0 10px rgba(245, 158, 11, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.75), 0 0 20px rgba(245, 158, 11, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Custom sleek scrollbar for history card */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(16, 185, 129, 0.05);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.5);
+}
