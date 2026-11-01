@@ -4,7 +4,8 @@ import { SpinResult } from "../types/wheel.ts";
 const MAX_HISTORY_ITEMS = 30;
 
 /**
- * Manages the persistence and visual rendering of recent spin results using Tailwind SVG icons.
+ * Editorial History Manager.
+ * Renders a clean, human-designed ledger of previous spins.
  */
 export class HistoryManager {
   private history: SpinResult[] = [];
@@ -49,7 +50,7 @@ export class HistoryManager {
     try {
       localStorage.setItem(STORAGE_KEYS.SPIN_HISTORY, JSON.stringify(this.history));
     } catch {
-      // LocalStorage access handling
+      // LocalStorage error handling
     }
   }
 
@@ -76,65 +77,20 @@ export class HistoryManager {
       .map((item) => {
         const isWin = item.category !== "zonk";
 
-        // Tailwind styling & icons
-        let iconSvg = "";
-        let badgeClasses = "";
-        let borderClass = "";
-
-        if (item.category === "refreshment") {
-          iconSvg = `
-            <div class="w-8 h-8 rounded-lg bg-amber-500 text-slate-950 flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
-            </div>
-          `;
-          badgeClasses = "bg-amber-100 text-amber-900 border-amber-300 font-black";
-          borderClass = "border-amber-400/40 hover:border-amber-400";
-        } else if (item.category === "ganci") {
-          iconSvg = `
-            <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-4 h-4 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-              </svg>
-            </div>
-          `;
-          badgeClasses = "bg-emerald-100 text-emerald-900 border-emerald-300 font-bold";
-          borderClass = "border-emerald-400/40 hover:border-emerald-400";
-        } else if (item.category === "stiker") {
-          iconSvg = `
-            <div class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-4 h-4 text-sky-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              </svg>
-            </div>
-          `;
-          badgeClasses = "bg-sky-100 text-sky-900 border-sky-300 font-bold";
-          borderClass = "border-sky-400/40 hover:border-sky-400";
-        } else {
-          iconSvg = `
-            <div class="w-8 h-8 rounded-lg bg-rose-500 text-white flex items-center justify-center shrink-0 shadow-xs">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
-            </div>
-          `;
-          badgeClasses = "bg-rose-100 text-rose-900 border-rose-300 font-bold";
-          borderClass = "border-rose-300/40 hover:border-rose-400";
-        }
+        const badge = isWin
+          ? `<span class="text-[10px] font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200/60">Hadiah</span>`
+          : `<span class="text-[10px] font-medium text-stone-500 bg-stone-100 px-2 py-0.5 rounded-md border border-stone-200">Zonk</span>`;
 
         return `
-          <div class="flex items-center justify-between p-2.5 bg-white/90 rounded-2xl border ${borderClass} shadow-xs transition hover:shadow-md">
+          <div class="flex items-center justify-between py-2 px-3 bg-stone-50/70 hover:bg-white rounded-lg border border-stone-200/60 transition">
             <div class="flex items-center gap-2.5">
-              ${iconSvg}
+              <span class="w-1.5 h-1.5 rounded-full ${isWin ? "bg-emerald-600" : "bg-stone-400"}"></span>
               <div>
-                <p class="text-xs font-black text-slate-900">${this.escapeHtml(item.label)}</p>
-                <p class="text-[10px] text-slate-500 font-medium">${item.formattedTime}</p>
+                <p class="text-xs font-semibold text-stone-900">${this.escapeHtml(item.label)}</p>
+                <p class="text-[10px] text-stone-400 font-mono">${item.formattedTime}</p>
               </div>
             </div>
-            <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeClasses}">
-              ${isWin ? "Menang" : "Zonk"}
-            </span>
+            ${badge}
           </div>
         `;
       })

@@ -3,216 +3,215 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Spin Matapadi - Smart Agriculture Lucky Wheel</title>
+  <title>Matapadi Smart Agriculture — Interactive Lucky Wheel</title>
   <link rel="stylesheet" href="/src/styles/main.css" />
-  <meta name="description" content="Wheel spin interaktif bertema hijau pertanian Matapadi Smart Agriculture dengan hadiah Gantungan Kunci, Merchandise, dan Zonk." />
+  <meta name="description" content="Kios interaktif roda keberuntungan Matapadi Smart Agriculture." />
   <link rel="icon" type="image/png" href="/logo-matapadi-smart-agriculture.png" />
 </head>
-<body class="bg-matapadi-glow min-h-screen text-slate-900 flex flex-col antialiased selection:bg-emerald-500 selection:text-white">
+<body class="bg-natural-editorial min-h-screen text-stone-900 flex flex-col antialiased selection:bg-emerald-900 selection:text-amber-200">
   
-  <!-- Premium Top Navigation Header -->
-  <header class="w-full bg-gradient-to-r from-emerald-950 via-emerald-900 to-teal-950 text-white shadow-xl border-b-2 border-emerald-500/30 sticky top-0 z-30">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+  <!-- Refined Editorial Header -->
+  <header class="w-full bg-white border-b border-stone-200/80 sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       
       <!-- Brand & Official Logo -->
-      <div class="flex items-center gap-3.5">
-        <div class="w-11 h-11 rounded-2xl bg-white p-1 shadow-lg shadow-emerald-950/40 border-2 border-amber-400 flex items-center justify-center shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-white p-0.5 border border-stone-200 flex items-center justify-center shrink-0">
           <img src="/logo-matapadi-smart-agriculture.png" alt="Matapadi Smart Agriculture" class="w-full h-full object-contain" />
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-lg md:text-xl font-black tracking-tight text-white">MATAPADI</span>
-            <span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 uppercase tracking-wider shadow-xs">
-              LUCKY SPIN
+            <span class="text-base font-extrabold tracking-tight text-stone-900">MATAPADI</span>
+            <span class="text-[10px] font-semibold text-stone-500 uppercase tracking-widest px-1.5 py-0.5 rounded bg-stone-100 border border-stone-200">
+              BOOTH KIOSK
             </span>
           </div>
-          <p class="text-xs text-emerald-300/90 font-medium">Smart Agriculture Interactive Giveaway</p>
+          <p class="text-[11px] text-stone-500 font-normal">Smart Agriculture Interactive Lucky Draw</p>
         </div>
       </div>
 
-      <!-- Action Utilities -->
-      <div class="flex items-center gap-3">
+      <!-- Controls: Sound Toggle & Booth Operator Reset -->
+      <div class="flex items-center gap-2">
         <button
           id="btn-toggle-sound"
           type="button"
           aria-label="Toggle Sound"
-          class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-800/80 hover:bg-emerald-700/90 text-xs font-semibold text-emerald-100 transition-all border border-emerald-500/40 shadow-sm cursor-pointer active:scale-95"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200/80 text-xs font-medium text-stone-700 transition border border-stone-200 cursor-pointer"
         >
-          <!-- Dynamic Tailwind Volume Icon -->
-          <span id="sound-icon-container" class="w-4 h-4 flex items-center justify-center text-amber-300">
-            <svg id="svg-sound-on" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <span id="sound-icon-container" class="w-3.5 h-3.5 flex items-center justify-center text-stone-600">
+            <svg id="svg-sound-on" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
-            <svg id="svg-sound-off" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg id="svg-sound-off" class="w-3.5 h-3.5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
             </svg>
           </span>
-          <span id="sound-label" class="hidden sm:inline">Suara Aktif</span>
+          <span id="sound-label" class="hidden sm:inline">Suara</span>
+        </button>
+
+        <!-- Booth Operator Reset for next visitor -->
+        <button
+          id="btn-reset-kiosk"
+          type="button"
+          title="Reset sesi untuk pengunjung berikutnya"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-700 transition border border-stone-200 cursor-pointer"
+        >
+          <svg class="w-3.5 h-3.5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          <span class="hidden sm:inline">Peserta Baru</span>
         </button>
       </div>
     </div>
   </header>
 
-  <!-- Main Responsive Stage -->
-  <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start justify-center">
+  <!-- Main Content Layout -->
+  <main class="flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start justify-center">
     
-    <!-- Left Stage: Canvas Wheel & Spin Trigger -->
-    <section class="flex-1 flex flex-col items-center w-full max-w-xl">
-      <!-- Wheel Enclosure Card -->
-      <div class="relative w-full flex flex-col items-center justify-center p-4 md:p-5 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-emerald-500/20 shadow-2xl shadow-emerald-950/10">
+    <!-- Left Stage: Canvas Wheel & Clean Button -->
+    <section class="flex-1 flex flex-col items-center w-full max-w-lg">
+      
+      <!-- Wheel Enclosure -->
+      <div class="relative w-full flex flex-col items-center justify-center p-5 md:p-6 rounded-2xl bg-white border border-stone-200/80 shadow-xs">
         
         <!-- Canvas Wheel Area -->
         <div id="canvas-container" class="relative flex items-center justify-center w-full max-w-[460px] aspect-square">
-          <canvas id="wheel-canvas" class="touch-none select-none max-w-full drop-shadow-2xl"></canvas>
+          <canvas id="wheel-canvas" class="touch-none select-none max-w-full drop-shadow-md"></canvas>
         </div>
 
-        <!-- Spin Trigger Button (Prominent, High-Vibrancy) -->
-        <div class="mt-4 w-full max-w-sm flex flex-col items-center gap-2">
+        <!-- Spin Trigger Controls -->
+        <div class="mt-5 w-full max-w-sm flex flex-col items-center gap-2">
           <button
             id="btn-spin"
             type="button"
-            class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 active:scale-95 text-white font-black text-lg tracking-wider uppercase shadow-xl shadow-emerald-600/40 ring-4 ring-amber-400/50 border-2 border-amber-300 transition-all duration-150 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none animate-pulse-glow"
+            class="w-full py-3.5 px-6 rounded-xl bg-emerald-950 hover:bg-emerald-900 active:bg-black text-amber-200 font-bold text-sm tracking-wider uppercase transition shadow-sm cursor-pointer disabled:bg-stone-200 disabled:text-stone-400 disabled:border-stone-300 disabled:cursor-not-allowed border border-emerald-900 flex items-center justify-center gap-2"
           >
-            <span class="flex items-center justify-center gap-3">
-              <svg class="w-6 h-6 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <span id="spin-btn-icon" class="w-4 h-4 text-amber-300">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span id="spin-text">PUTAR RODA SEKARANG</span>
             </span>
+            <span id="spin-text">PUTAR RODA</span>
           </button>
-          <span class="text-xs text-emerald-900/60 font-semibold tracking-wide flex items-center gap-1.5">
-            <kbd class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 text-[10px] font-mono border border-emerald-300">SPASI</kbd>
-            <span>atau klik tombol untuk memutar</span>
+          
+          <span id="spin-helper-text" class="text-xs text-stone-500 font-normal">
+            1 kesempatan per pengunjung booth
           </span>
         </div>
       </div>
     </section>
 
-    <!-- Right Column: Prize Highlights & Spin History -->
-    <aside class="w-full lg:w-80 flex flex-col gap-4">
+    <!-- Right Column: Editorial Prize Registry & History -->
+    <aside class="w-full lg:w-80 flex flex-col gap-5">
       
-      <!-- Prize Categories Card with Strong Vibrant Colors -->
-      <div class="p-4 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-emerald-500/20 shadow-xl">
-        <h2 class="text-xs font-black uppercase tracking-wider text-emerald-950 flex items-center gap-2 mb-3">
-          <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
-          </svg>
-          <span>KATEGORI HADIAH</span>
-        </h2>
+      <!-- Prize Registry Panel -->
+      <div class="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-xs">
+        <div class="flex items-center justify-between mb-3 border-b border-stone-100 pb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-stone-900">
+            Daftar Hadiah Booth
+          </h2>
+          <span class="text-[10px] text-stone-400 font-mono">4 ITEM</span>
+        </div>
         
-        <div class="space-y-2.5">
+        <!-- Clean Editorial Item List -->
+        <div class="divide-y divide-stone-100 text-xs">
           
           <!-- Item 1: Ganci -->
-          <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20 border border-emerald-300/40">
-            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0">
-              <svg class="w-4 h-4 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-              </svg>
+          <div class="py-2.5 flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <span class="text-stone-400 font-mono text-[11px] mt-0.5">01</span>
+              <div>
+                <p class="font-bold text-stone-900 leading-tight">Ganci Matapadi</p>
+                <p class="text-[11px] text-stone-500 mt-0.5">Souvenir eksklusif gantungan kunci</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <p class="font-black text-xs text-white leading-tight">Ganci</p>
-              <p class="text-[10px] text-emerald-100 font-medium">Souvenir eksklusif Matapadi</p>
-            </div>
-            <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-white/25 text-white border border-white/30">
-              SOUVENIR
+            <span class="text-[10px] font-medium text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/50 shrink-0">
+              Souvenir
             </span>
           </div>
 
           <!-- Item 2: Stiker -->
-          <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 text-white shadow-md shadow-sky-500/20 border border-sky-300/40">
-            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0">
-              <svg class="w-4 h-4 text-sky-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-              </svg>
+          <div class="py-2.5 flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <span class="text-stone-400 font-mono text-[11px] mt-0.5">02</span>
+              <div>
+                <p class="font-bold text-stone-900 leading-tight">Stiker Eksklusif</p>
+                <p class="text-[11px] text-stone-500 mt-0.5">Pack stiker Smart Agriculture</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <p class="font-black text-xs text-white leading-tight">Stiker</p>
-              <p class="text-[10px] text-sky-100 font-medium">Stiker kreatif Smart Agriculture</p>
-            </div>
-            <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-white/25 text-white border border-white/30">
-              EXCLUSIVE
+            <span class="text-[10px] font-medium text-stone-700 bg-stone-100 px-2 py-0.5 rounded border border-stone-200 shrink-0">
+              Koleksi
             </span>
           </div>
 
           <!-- Item 3: Refreshment -->
-          <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-500 to-orange-500 text-slate-950 shadow-md shadow-amber-500/25 border-2 border-amber-300">
-            <div class="w-8 h-8 rounded-xl bg-slate-950/20 backdrop-blur-xs flex items-center justify-center text-slate-950 shrink-0">
-              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-              </svg>
+          <div class="py-2.5 flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <span class="text-stone-400 font-mono text-[11px] mt-0.5">03</span>
+              <div>
+                <p class="font-bold text-stone-900 leading-tight">Refreshment</p>
+                <p class="text-[11px] text-stone-500 mt-0.5">Voucher minuman & snack booth</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <p class="font-black text-xs text-slate-950 leading-tight">Refreshment</p>
-              <p class="text-[10px] text-slate-900/80 font-semibold">Minuman & snack segar</p>
-            </div>
-            <span class="text-[9px] font-black px-2 py-0.5 rounded-full bg-slate-950 text-amber-300 shadow-xs">
-              ★ SEGAR ★
+            <span class="text-[10px] font-semibold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60 shrink-0">
+              Konsumsi
             </span>
           </div>
 
           <!-- Item 4: Zonk -->
-          <div class="flex items-center gap-3 p-2.5 rounded-2xl bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-md shadow-rose-500/20 border border-rose-300/40">
-            <div class="w-8 h-8 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center text-white shrink-0">
-              <svg class="w-4 h-4 text-amber-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-              </svg>
+          <div class="py-2.5 flex items-start justify-between gap-3">
+            <div class="flex items-start gap-2.5">
+              <span class="text-stone-400 font-mono text-[11px] mt-0.5">04</span>
+              <div>
+                <p class="font-bold text-stone-900 leading-tight">ZONK</p>
+                <p class="text-[11px] text-stone-500 mt-0.5">Kesempatan selesai (tidak dapat diulang)</p>
+              </div>
             </div>
-            <div class="flex-1">
-              <p class="font-black text-xs text-white leading-tight">ZONK</p>
-              <p class="text-[10px] text-rose-100 font-medium">Coba lagi di putaran berikutnya</p>
-            </div>
-            <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-white/25 text-white border border-white/30">
-              COBA LAGI
+            <span class="text-[10px] font-medium text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200 shrink-0">
+              Selesai
             </span>
           </div>
 
         </div>
+
+        <div class="mt-3.5 pt-3 border-t border-stone-100 text-[11px] text-stone-400 leading-relaxed">
+          Setiap pengunjung berhak atas 1 kali putaran. Apabila mendapatkan Zonk, kesempatan putaran dinyatakan selesai.
+        </div>
       </div>
 
       <!-- History Card -->
-      <div class="p-4 rounded-3xl bg-white/95 backdrop-blur-xl border-2 border-emerald-500/20 shadow-xl flex flex-col">
-        <div class="flex items-center justify-between mb-2.5">
-          <h2 class="text-xs font-black uppercase tracking-wider text-emerald-950 flex items-center gap-2">
-            <svg class="w-4 h-4 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>RIWAYAT PUTARAN</span>
+      <div class="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-xs flex flex-col">
+        <div class="flex items-center justify-between mb-3 border-b border-stone-100 pb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-stone-900">
+            Riwayat Putaran
           </h2>
           <button
             id="btn-clear-history"
             type="button"
-            class="text-[11px] text-emerald-700 hover:text-emerald-900 font-bold flex items-center gap-1 cursor-pointer transition hover:underline"
+            class="text-[11px] text-stone-500 hover:text-stone-900 font-medium cursor-pointer transition hover:underline"
           >
-            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-            <span>Hapus</span>
+            Hapus
           </button>
         </div>
 
-        <!-- Empty state with Smart Agriculture emblem -->
-        <div id="history-empty" class="py-6 text-center text-emerald-800/60 text-xs">
-          <div class="w-10 h-10 mx-auto mb-2 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-          </div>
-          <p class="font-semibold text-emerald-900">Belum ada riwayat putaran.</p>
-          <p class="text-[11px] text-emerald-700/70">Tekan tombol putar untuk memulai!</p>
+        <!-- Empty state -->
+        <div id="history-empty" class="py-6 text-center text-stone-400 text-xs">
+          <p class="font-medium text-stone-600">Belum ada riwayat.</p>
+          <p class="text-[11px] mt-0.5">Putar roda untuk memulai sesi.</p>
         </div>
 
         <!-- History list container -->
-        <div id="history-list" class="space-y-2 max-h-52 overflow-y-auto pr-1"></div>
+        <div id="history-list" class="space-y-2 max-h-48 overflow-y-auto pr-1"></div>
       </div>
 
     </aside>
   </main>
 
-  <!-- Footer -->
-  <footer class="w-full py-3.5 text-center text-xs text-emerald-900/70 border-t border-emerald-900/10 font-medium">
-    <p>© 2026 Matapadi Smart Agriculture. Production-Grade Canvas 2D Engine with Tailwind CSS.</p>
+  <!-- Clean Footer -->
+  <footer class="w-full py-4 text-center text-xs text-stone-400 border-t border-stone-200/60">
+    <p>© 2026 Matapadi Smart Agriculture. Official Event Kiosk System.</p>
   </footer>
 
   <!-- Result Announcement Modal Dialog -->
@@ -221,47 +220,47 @@
     tabindex="-1"
     role="dialog"
     aria-modal="true"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-950/70 backdrop-blur-sm p-4 hidden opacity-0 transition-opacity duration-200"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/60 backdrop-blur-xs p-4 hidden opacity-0 transition-opacity duration-200"
   >
     <div
       id="modal-box"
-      class="w-full max-w-sm bg-white rounded-3xl p-6 shadow-2xl border-2 border-emerald-500/30 transform scale-95 opacity-0 transition-all duration-200 flex flex-col items-center text-center relative"
+      class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl border border-stone-200 transform scale-95 opacity-0 transition-all duration-200 flex flex-col items-center text-center relative"
     >
       <!-- Close button -->
       <button
         id="btn-close-modal"
         type="button"
         aria-label="Tutup Dialog"
-        class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 rounded-full hover:bg-slate-100 transition cursor-pointer"
+        class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-stone-100 transition cursor-pointer"
       >
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
 
-      <!-- Brand Logo / Badge in Modal -->
-      <div class="w-14 h-14 rounded-2xl bg-white p-1 shadow-md border-2 border-amber-400 mb-3 flex items-center justify-center">
+      <!-- Brand Logo in Modal -->
+      <div class="w-12 h-12 rounded-xl bg-white p-0.5 border border-stone-200 mb-3 flex items-center justify-center shadow-xs">
         <img src="/logo-matapadi-smart-agriculture.png" alt="Matapadi Logo" class="w-full h-full object-contain" />
       </div>
 
       <!-- Title & Details -->
-      <h3 id="modal-title" class="text-xl font-black text-emerald-950">
-        Selamat!
-      </h3>
-      <p id="modal-label" class="text-2xl font-black text-emerald-700 my-2 tracking-tight">
-        Merchandise
+      <p id="modal-title" class="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        Hasil Putaran
       </p>
-      <p id="modal-desc" class="text-xs text-slate-600 mb-6 leading-relaxed max-w-xs">
-        Deskripsi hadiah akan ditampilkan di sini.
+      <h3 id="modal-label" class="text-3xl font-black text-stone-900 my-2 tracking-tight">
+        ZONK
+      </h3>
+      <p id="modal-desc" class="text-xs text-stone-600 mb-6 leading-relaxed max-w-xs">
+        Deskripsi hasil putaran.
       </p>
 
       <!-- Action Button -->
       <button
         id="btn-modal-action"
         type="button"
-        class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition cursor-pointer active:scale-95"
+        class="w-full py-3 px-5 rounded-xl bg-stone-900 hover:bg-black text-white font-semibold text-sm transition cursor-pointer"
       >
-        Ambil & Putar Lagi
+        Tutup
       </button>
     </div>
   </div>

@@ -2,7 +2,8 @@ import confetti from "canvas-confetti";
 import { SpinResult } from "../types/wheel.ts";
 
 /**
- * Manages modal announcement dialog and celebratory confetti effects.
+ * Editorial Modal Announcement Dialog.
+ * Enforces rule: "Kalau zonk tidak boleh putar lagi" — no retry option on Zonk.
  */
 export class ModalManager {
   private readonly modalBackdrop: HTMLElement;
@@ -29,31 +30,28 @@ export class ModalManager {
   public showResult(result: SpinResult, onClose?: () => void): void {
     this.onCloseCallback = onClose;
 
-    const isWin = result.category !== "zonk";
+    const isZonk = result.category === "zonk";
 
-    if (isWin) {
-      this.titleElement.textContent = "Selamat! Anda Beruntung!";
-      this.titleElement.className = "text-xl font-black text-emerald-950";
-      this.labelElement.textContent = result.label;
-      this.labelElement.className =
-        result.category === "refreshment"
-          ? "text-2xl font-black text-amber-600 tracking-tight my-2"
-          : result.category === "stiker"
-          ? "text-2xl font-black text-sky-600 tracking-tight my-2"
-          : "text-2xl font-black text-emerald-600 tracking-tight my-2";
-      this.descElement.textContent = result.description;
-      this.actionButton.textContent = "Klaim & Putar Lagi";
-      this.actionButton.className = "w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition cursor-pointer active:scale-95";
-
-      this.fireAgriculturalConfetti();
+    if (isZonk) {
+      // ZONK: strictly no retry allowed
+      this.titleElement.textContent = "Putaran Selesai";
+      this.titleElement.className = "text-base font-semibold text-stone-500 uppercase tracking-wider";
+      this.labelElement.textContent = "ZONK";
+      this.labelElement.className = "text-3xl font-black text-stone-800 tracking-tight my-2";
+      this.descElement.textContent = "Kesempatan memutar Anda telah selesai dan tidak dapat diulang. Terima kasih telah berpartisipasi di booth Matapadi.";
+      this.actionButton.textContent = "Selesai";
+      this.actionButton.className = "w-full py-3 px-5 rounded-xl bg-stone-900 hover:bg-black text-white font-semibold text-sm transition cursor-pointer";
     } else {
-      this.titleElement.textContent = "Tetap Semangat!";
-      this.titleElement.className = "text-xl font-black text-slate-900";
+      // PRIZE WON: Congratulations & claim instruction
+      this.titleElement.textContent = "Selamat! Anda Memenangkan";
+      this.titleElement.className = "text-base font-semibold text-emerald-800 uppercase tracking-wider";
       this.labelElement.textContent = result.label;
-      this.labelElement.className = "text-2xl font-black text-rose-600 tracking-tight my-2";
-      this.descElement.textContent = result.description;
-      this.actionButton.textContent = "Coba Putar Lagi";
-      this.actionButton.className = "w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-slate-800 to-slate-900 hover:from-slate-900 hover:to-black text-white font-black text-sm tracking-wide shadow-lg transition cursor-pointer active:scale-95";
+      this.labelElement.className = "text-3xl font-black text-emerald-950 tracking-tight my-2";
+      this.descElement.textContent = "Tunjukkan hasil ini kepada petugas booth Matapadi untuk mengklaim hadiah Anda.";
+      this.actionButton.textContent = "Klaim Hadiah";
+      this.actionButton.className = "w-full py-3 px-5 rounded-xl bg-emerald-900 hover:bg-emerald-800 text-white font-semibold text-sm shadow-sm transition cursor-pointer";
+
+      this.fireEditorialConfetti();
     }
 
     this.modalBackdrop.classList.remove("hidden");
@@ -73,7 +71,7 @@ export class ModalManager {
     setTimeout(() => {
       this.modalBackdrop.classList.add("hidden");
       this.onCloseCallback?.();
-    }, 250);
+    }, 200);
   }
 
   private bindEvents(): void {
@@ -93,25 +91,22 @@ export class ModalManager {
     });
   }
 
-  /**
-   * Celebratory confetti particles with vivid emerald, harvest gold, and radiant white tones.
-   */
-  private fireAgriculturalConfetti(): void {
-    const end = Date.now() + 1800;
-    const colors = ["#10b981", "#34d399", "#f59e0b", "#fbbf24", "#ffffff"];
+  private fireEditorialConfetti(): void {
+    const end = Date.now() + 1400;
+    const colors = ["#1b4332", "#c58940", "#e9c46a", "#ffffff"];
 
     const frame = () => {
       confetti({
-        particleCount: 4,
+        particleCount: 3,
         angle: 60,
-        spread: 60,
+        spread: 50,
         origin: { x: 0 },
         colors: colors,
       });
       confetti({
-        particleCount: 4,
+        particleCount: 3,
         angle: 120,
-        spread: 60,
+        spread: 50,
         origin: { x: 1 },
         colors: colors,
       });

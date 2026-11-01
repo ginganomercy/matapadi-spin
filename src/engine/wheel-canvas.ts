@@ -8,8 +8,8 @@ export interface WheelCanvasOptions {
 }
 
 /**
- * Ultra-Vibrant High-Performance Canvas Wheel Renderer.
- * Supports dynamic sector counts (4 core items: Ganci, Stiker, Refreshment, Zonk).
+ * Editorial Agritech Canvas Wheel Renderer.
+ * Designed with restrained craftsmanship, organic earth tones, and tactile physical feedback.
  */
 export class WheelCanvas {
   private readonly canvas: HTMLCanvasElement;
@@ -22,7 +22,6 @@ export class WheelCanvas {
   private lastPegPassedIndex: number = -1;
   private displaySizePx: number = CANVAS_CONFIG.BASE_SIZE_PX;
 
-  // Matapadi Brand Logo
   private logoImage: HTMLImageElement | null = null;
   private isLogoLoaded: boolean = false;
 
@@ -75,7 +74,6 @@ export class WheelCanvas {
   public setAngle(angleRad: number, angularVelocity: number = 0): void {
     this.currentAngleRad = angleRad;
 
-    // Detect peg collision for sound & needle deflection
     const pegAngleStep = (Math.PI * 2) / CANVAS_CONFIG.PEG_COUNT;
     const normalizedPointerAngle = ((PHYSICS_CONFIG.POINTER_ANGLE_OFFSET_RAD - angleRad) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2);
     const currentPegIndex = Math.floor(normalizedPointerAngle / pegAngleStep);
@@ -83,11 +81,10 @@ export class WheelCanvas {
     if (currentPegIndex !== this.lastPegPassedIndex) {
       this.lastPegPassedIndex = currentPegIndex;
       const normalizedVelocity = Math.min(1.0, Math.abs(angularVelocity) / 12);
-      this.pointerDeflectionAngleRad = -0.35 * Math.min(1.0, 0.45 + normalizedVelocity);
+      this.pointerDeflectionAngleRad = -0.30 * Math.min(1.0, 0.40 + normalizedVelocity);
       this.onPegHit?.(normalizedVelocity);
     } else {
-      // Elastic snap-back
-      this.pointerDeflectionAngleRad *= 0.80;
+      this.pointerDeflectionAngleRad *= 0.82;
       if (Math.abs(this.pointerDeflectionAngleRad) < 0.005) {
         this.pointerDeflectionAngleRad = 0;
       }
@@ -107,12 +104,12 @@ export class WheelCanvas {
 
     this.ctx.clearRect(0, 0, size, size);
 
-    // 1. Ambient Golden-Green Glow behind the entire wheel
+    // 1. Soft Warm Ambient Shadow
     this.ctx.save();
     this.ctx.beginPath();
-    this.ctx.arc(center, center + 4, radius + CANVAS_CONFIG.RIM_WIDTH_PX + 4, 0, Math.PI * 2);
-    this.ctx.fillStyle = "rgba(16, 185, 129, 0.28)";
-    this.ctx.filter = "blur(18px)";
+    this.ctx.arc(center, center + 6, radius + CANVAS_CONFIG.RIM_WIDTH_PX, 0, Math.PI * 2);
+    this.ctx.fillStyle = "rgba(20, 40, 30, 0.12)";
+    this.ctx.filter = "blur(14px)";
     this.ctx.fill();
     this.ctx.restore();
 
@@ -131,7 +128,7 @@ export class WheelCanvas {
     // 3. Center Hub with official Matapadi Logo
     this.drawCenterHub(center);
 
-    // 4. Top Pointer Needle with 3D Bevel & Drop Shadow
+    // 4. Top Needle with tactile brass shading
     this.drawPointer(center, radius);
   }
 
@@ -146,26 +143,22 @@ export class WheelCanvas {
       const startAngle = i * arcStep;
       const endAngle = startAngle + arcStep;
 
-      // Slice sector geometry
       this.ctx.beginPath();
       this.ctx.moveTo(0, 0);
       this.ctx.arc(0, 0, radius, startAngle, endAngle);
       this.ctx.closePath();
 
-      // Strong vivid base color
       this.ctx.fillStyle = sector.backgroundColor;
       this.ctx.fill();
 
-      // Radiant radial gloss highlight
-      const radialGloss = this.ctx.createRadialGradient(0, 0, radius * 0.15, 0, 0, radius);
-      radialGloss.addColorStop(0, "rgba(255, 255, 255, 0.30)");
-      radialGloss.addColorStop(0.55, "rgba(255, 255, 255, 0.06)");
-      radialGloss.addColorStop(0.92, "rgba(0, 0, 0, 0.0)");
-      radialGloss.addColorStop(1, "rgba(0, 0, 0, 0.22)");
-      this.ctx.fillStyle = radialGloss;
+      // Subtle warm organic radial gradient
+      const gradient = this.ctx.createRadialGradient(0, 0, radius * 0.2, 0, 0, radius);
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.12)");
+      gradient.addColorStop(0.7, "rgba(0, 0, 0, 0.0)");
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0.20)");
+      this.ctx.fillStyle = gradient;
       this.ctx.fill();
 
-      // Content (Large Icons & High-Contrast Radial Text)
       this.drawSectorContent(sector, startAngle + arcStep / 2, radius);
     }
   }
@@ -174,114 +167,64 @@ export class WheelCanvas {
     this.ctx.save();
     this.ctx.rotate(midAngle);
 
-    // Position along radial axis (facing inward from rim towards center)
-    const iconPosR = radius * 0.81;
-    const textStartR = radius * 0.61;
+    const iconPosR = radius * 0.80;
+    const textStartR = radius * 0.58;
 
     // 1. Draw Sector Icon
     this.ctx.save();
     this.ctx.translate(iconPosR, 0);
     this.ctx.rotate(Math.PI / 2);
-    this.drawSectorVectorIcon(sector.category);
+    this.drawSectorIcon(sector.category);
     this.ctx.restore();
 
-    // 2. Draw Strong Bold Radial Typography
+    // 2. Draw Editorial Radial Typography
     this.ctx.save();
     this.ctx.translate(textStartR, 0);
-
-    const isGold = sector.category === "refreshment";
-    const primaryTextColor = isGold ? "#0f172a" : "#ffffff";
-    const strokeOutlineColor = isGold ? "rgba(255, 255, 255, 0.9)" : "rgba(0, 0, 0, 0.8)";
 
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
 
-    if (sector.category === "zonk") {
-      this.ctx.font = "900 24px 'Inter', system-ui, sans-serif";
-      this.ctx.letterSpacing = "2px";
-      this.ctx.lineWidth = 3.5;
-      this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("ZONK", 0, 0);
-      this.ctx.fillStyle = primaryTextColor;
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
-      this.ctx.shadowBlur = 4;
-      this.ctx.fillText("ZONK", 0, 0);
+    // Text with soft shadow
+    this.ctx.font = "800 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    this.ctx.letterSpacing = "1.5px";
+    this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+    this.ctx.shadowBlur = 4;
+    this.ctx.fillStyle = sector.textColor;
+    this.ctx.fillText(sector.label, 0, -2);
 
-      this.ctx.shadowBlur = 0;
-      this.ctx.font = "bold 9.5px 'Inter', sans-serif";
-      this.ctx.fillStyle = "#fef08a";
-      this.ctx.fillText("COBA LAGI", 0, 18);
+    // Subtle sub-label
+    this.ctx.shadowBlur = 0;
+    this.ctx.font = "600 8.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+    this.ctx.letterSpacing = "0.5px";
+    this.ctx.fillStyle = sector.accentColor;
 
-    } else if (sector.category === "ganci") {
-      this.ctx.font = "900 20px 'Inter', system-ui, sans-serif";
-      this.ctx.letterSpacing = "1px";
-      this.ctx.lineWidth = 3.2;
-      this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("GANCI", 0, 0);
-
-      this.ctx.fillStyle = primaryTextColor;
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
-      this.ctx.shadowBlur = 4;
-      this.ctx.fillText("GANCI", 0, 0);
-
-      this.ctx.shadowBlur = 0;
-      this.ctx.font = "bold 9.5px 'Inter', sans-serif";
-      this.ctx.fillStyle = "#fde047";
-      this.ctx.fillText("SOUVENIR", 0, 18);
-
+    if (sector.category === "ganci") {
+      this.ctx.fillText("SOUVENIR", 0, 16);
     } else if (sector.category === "stiker") {
-      this.ctx.font = "900 20px 'Inter', system-ui, sans-serif";
-      this.ctx.letterSpacing = "1px";
-      this.ctx.lineWidth = 3.2;
-      this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("STIKER", 0, 0);
-
-      this.ctx.fillStyle = primaryTextColor;
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.55)";
-      this.ctx.shadowBlur = 4;
-      this.ctx.fillText("STIKER", 0, 0);
-
-      this.ctx.shadowBlur = 0;
-      this.ctx.font = "bold 9.5px 'Inter', sans-serif";
-      this.ctx.fillStyle = "#bae6fd";
-      this.ctx.fillText("EXCLUSIVE", 0, 18);
-
+      this.ctx.fillText("EXCLUSIVE", 0, 16);
+    } else if (sector.category === "refreshment") {
+      this.ctx.fillText("BOOTH DRINK", 0, 16);
     } else {
-      // Refreshment
-      this.ctx.font = "900 16px 'Inter', system-ui, sans-serif";
-      this.ctx.letterSpacing = "0.5px";
-      this.ctx.lineWidth = 3.2;
-      this.ctx.strokeStyle = strokeOutlineColor;
-      this.ctx.strokeText("REFRESHMENT", 0, -2);
-
-      this.ctx.fillStyle = primaryTextColor;
-      this.ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
-      this.ctx.shadowBlur = 4;
-      this.ctx.fillText("REFRESHMENT", 0, -2);
-
-      this.ctx.shadowBlur = 0;
-      this.ctx.font = "900 9px 'Inter', sans-serif";
-      this.ctx.fillStyle = "#78350f";
-      this.ctx.fillText("★ SNACK & DRINK ★", 0, 15);
+      this.ctx.fillText("SELESAI", 0, 16);
     }
 
     this.ctx.restore();
     this.ctx.restore();
   }
 
-  private drawSectorVectorIcon(category: string): void {
-    this.ctx.font = "28px system-ui";
-    this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-    this.ctx.shadowBlur = 6;
+  private drawSectorIcon(category: string): void {
+    this.ctx.font = "24px system-ui, -apple-system, sans-serif";
+    this.ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+    this.ctx.shadowBlur = 4;
 
     if (category === "ganci") {
       this.ctx.fillText("🏷️", 0, 0);
     } else if (category === "stiker") {
       this.ctx.fillText("🔖", 0, 0);
     } else if (category === "refreshment") {
-      this.ctx.fillText("🥤", 0, 0);
+      this.ctx.fillText("☕", 0, 0);
     } else {
-      this.ctx.fillText("🌱", 0, 0);
+      this.ctx.fillText("🌾", 0, 0);
     }
   }
 
@@ -294,20 +237,11 @@ export class WheelCanvas {
       const cosA = Math.cos(angle);
       const sinA = Math.sin(angle);
 
-      // Gold core divider
       this.ctx.beginPath();
       this.ctx.moveTo(0, 0);
       this.ctx.lineTo(cosA * radius, sinA * radius);
-      this.ctx.strokeStyle = "#fde047";
-      this.ctx.lineWidth = 3.5;
-      this.ctx.stroke();
-
-      // Crisp white highlight centerline
-      this.ctx.beginPath();
-      this.ctx.moveTo(0, 0);
-      this.ctx.lineTo(cosA * radius, sinA * radius);
-      this.ctx.strokeStyle = "#ffffff";
-      this.ctx.lineWidth = 1.2;
+      this.ctx.strokeStyle = "rgba(233, 196, 106, 0.65)"; // Warm brushed brass
+      this.ctx.lineWidth = 2.5;
       this.ctx.stroke();
     }
   }
@@ -321,28 +255,20 @@ export class WheelCanvas {
     this.ctx.arc(0, 0, radius, 0, Math.PI * 2, true);
     this.ctx.closePath();
 
-    // Metallic Gold Gradient
+    // Brushed Brass Rim Gradient
     const rimGradient = this.ctx.createRadialGradient(0, 0, radius, 0, 0, outerRadius);
-    rimGradient.addColorStop(0, "#b45309");
-    rimGradient.addColorStop(0.25, "#f59e0b");
-    rimGradient.addColorStop(0.5, "#fef08a");
-    rimGradient.addColorStop(0.75, "#d97706");
-    rimGradient.addColorStop(1, "#78350f");
+    rimGradient.addColorStop(0, "#78350f");
+    rimGradient.addColorStop(0.3, "#c58940");
+    rimGradient.addColorStop(0.6, "#e9c46a");
+    rimGradient.addColorStop(0.85, "#b45309");
+    rimGradient.addColorStop(1, "#451a03");
     this.ctx.fillStyle = rimGradient;
     this.ctx.fill();
 
-    // Inner bright gold contour ring
     this.ctx.beginPath();
-    this.ctx.arc(0, 0, radius + 1, 0, Math.PI * 2);
-    this.ctx.strokeStyle = "#fef08a";
-    this.ctx.lineWidth = 2;
-    this.ctx.stroke();
-
-    // Outer boundary gold ring
-    this.ctx.beginPath();
-    this.ctx.arc(0, 0, outerRadius - 1, 0, Math.PI * 2);
-    this.ctx.strokeStyle = "#fde047";
-    this.ctx.lineWidth = 2.5;
+    this.ctx.arc(0, 0, outerRadius, 0, Math.PI * 2);
+    this.ctx.strokeStyle = "#d4a373";
+    this.ctx.lineWidth = 1.5;
     this.ctx.stroke();
   }
 
@@ -357,25 +283,23 @@ export class WheelCanvas {
       const x = Math.cos(angle) * distance;
       const y = Math.sin(angle) * distance;
 
-      // Drop shadow for rivet
       this.ctx.beginPath();
-      this.ctx.arc(x, y + 1.2, pegRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = "rgba(0, 0, 0, 0.45)";
+      this.ctx.arc(x, y + 1, pegRadius, 0, Math.PI * 2);
+      this.ctx.fillStyle = "rgba(0, 0, 0, 0.35)";
       this.ctx.fill();
 
-      // Shiny Rivet Sphere
       this.ctx.beginPath();
       this.ctx.arc(x, y, pegRadius, 0, Math.PI * 2);
-      const pegGrad = this.ctx.createRadialGradient(x - 1.2, y - 1.2, 0.4, x, y, pegRadius);
-      pegGrad.addColorStop(0, "#ffffff"); // Specular glint
-      pegGrad.addColorStop(0.35, "#fef08a");
-      pegGrad.addColorStop(0.7, "#f59e0b");
-      pegGrad.addColorStop(1, "#92400e");
+      const pegGrad = this.ctx.createRadialGradient(x - 1, y - 1, 0.4, x, y, pegRadius);
+      pegGrad.addColorStop(0, "#ffffff");
+      pegGrad.addColorStop(0.4, "#fefae0");
+      pegGrad.addColorStop(0.8, "#c58940");
+      pegGrad.addColorStop(1, "#78350f");
       this.ctx.fillStyle = pegGrad;
       this.ctx.fill();
 
-      this.ctx.strokeStyle = "#78350f";
-      this.ctx.lineWidth = 0.8;
+      this.ctx.strokeStyle = "#451a03";
+      this.ctx.lineWidth = 0.6;
       this.ctx.stroke();
     }
   }
@@ -383,33 +307,31 @@ export class WheelCanvas {
   private drawCenterHub(center: number): void {
     const hubRadius = CANVAS_CONFIG.CENTER_HUB_RADIUS_PX;
 
-    // 1. Heavy drop shadow for center dome
+    // Hub drop shadow
     this.ctx.save();
     this.ctx.beginPath();
-    this.ctx.arc(center, center + 4, hubRadius + 2, 0, Math.PI * 2);
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.38)";
-    this.ctx.filter = "blur(8px)";
+    this.ctx.arc(center, center + 3, hubRadius + 1, 0, Math.PI * 2);
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
+    this.ctx.filter = "blur(6px)";
     this.ctx.fill();
     this.ctx.restore();
 
-    // 2. Beveled Golden Outer Frame
+    // Brushed Gold Frame
     this.ctx.beginPath();
     this.ctx.arc(center, center, hubRadius, 0, Math.PI * 2);
     const ringGrad = this.ctx.createLinearGradient(center - hubRadius, center - hubRadius, center + hubRadius, center + hubRadius);
-    ringGrad.addColorStop(0, "#fef08a");
-    ringGrad.addColorStop(0.3, "#f59e0b");
-    ringGrad.addColorStop(0.7, "#d97706");
+    ringGrad.addColorStop(0, "#e9c46a");
+    ringGrad.addColorStop(0.5, "#c58940");
     ringGrad.addColorStop(1, "#78350f");
     this.ctx.fillStyle = ringGrad;
     this.ctx.fill();
 
     this.ctx.strokeStyle = "#ffffff";
-    this.ctx.lineWidth = 2.2;
+    this.ctx.lineWidth = 1.8;
     this.ctx.stroke();
 
-    // 3. Inner Circular Disc for Logo
-    const innerRadius = hubRadius - 6;
-
+    // Inner Disc with Logo
+    const innerRadius = hubRadius - 5;
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(center, center, innerRadius, 0, Math.PI * 2);
@@ -427,33 +349,15 @@ export class WheelCanvas {
         logoDrawSize,
         logoDrawSize
       );
-    } else {
-      this.ctx.fillStyle = "#064e3b";
-      this.ctx.fill();
-      this.ctx.textAlign = "center";
-      this.ctx.textBaseline = "middle";
-      this.ctx.font = "26px system-ui";
-      this.ctx.fillText("🌾", center, center - 6);
-      this.ctx.fillStyle = "#fef08a";
-      this.ctx.font = "bold 10px sans-serif";
-      this.ctx.fillText("MATAPADI", center, center + 14);
     }
     this.ctx.restore();
 
-    // 4. Subtle Convex Glass Highlight overlay across hub
+    // Subtle glass bevel
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(center, center, innerRadius, 0, Math.PI * 2);
-    const glassSheen = this.ctx.createLinearGradient(center, center - innerRadius, center, center + innerRadius);
-    glassSheen.addColorStop(0, "rgba(255, 255, 255, 0.40)");
-    glassSheen.addColorStop(0.4, "rgba(255, 255, 255, 0.05)");
-    glassSheen.addColorStop(0.6, "rgba(0, 0, 0, 0.0)");
-    glassSheen.addColorStop(1, "rgba(0, 0, 0, 0.15)");
-    this.ctx.fillStyle = glassSheen;
-    this.ctx.fill();
-
-    this.ctx.strokeStyle = "#f59e0b";
-    this.ctx.lineWidth = 1.8;
+    this.ctx.strokeStyle = "rgba(197, 137, 64, 0.4)";
+    this.ctx.lineWidth = 1.5;
     this.ctx.stroke();
     this.ctx.restore();
   }
@@ -461,25 +365,25 @@ export class WheelCanvas {
   private drawPointer(center: number, radius: number): void {
     const pointerW = CANVAS_CONFIG.POINTER_WIDTH_PX;
     const pointerH = CANVAS_CONFIG.POINTER_HEIGHT_PX;
-    const pointerTipY = center - radius + 14;
+    const pointerTipY = center - radius + 12;
     const pointerBaseY = pointerTipY - pointerH;
 
     this.ctx.save();
     this.ctx.translate(center, pointerBaseY);
     this.ctx.rotate(this.pointerDeflectionAngleRad);
 
-    // 1. Pointer Drop Shadow
+    // Pointer shadow
     this.ctx.beginPath();
     this.ctx.moveTo(0, pointerH + 2);
     this.ctx.lineTo(-pointerW / 2 - 2, 2);
     this.ctx.lineTo(pointerW / 2 + 2, 2);
     this.ctx.closePath();
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    this.ctx.filter = "blur(4px)";
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+    this.ctx.filter = "blur(3px)";
     this.ctx.fill();
     this.ctx.filter = "none";
 
-    // 2. Shiny 3D Metallic Golden Needle
+    // Tactile Brass Needle
     this.ctx.beginPath();
     this.ctx.moveTo(0, pointerH);
     this.ctx.lineTo(-pointerW / 2, 0);
@@ -487,37 +391,24 @@ export class WheelCanvas {
     this.ctx.closePath();
 
     const arrowGrad = this.ctx.createLinearGradient(-pointerW / 2, 0, pointerW / 2, pointerH);
-    arrowGrad.addColorStop(0, "#ffffff");
-    arrowGrad.addColorStop(0.2, "#fef08a");
-    arrowGrad.addColorStop(0.6, "#f59e0b");
-    arrowGrad.addColorStop(1, "#b45309");
+    arrowGrad.addColorStop(0, "#fefae0");
+    arrowGrad.addColorStop(0.3, "#e9c46a");
+    arrowGrad.addColorStop(0.8, "#c58940");
+    arrowGrad.addColorStop(1, "#78350f");
     this.ctx.fillStyle = arrowGrad;
     this.ctx.fill();
 
-    this.ctx.strokeStyle = "#ffffff";
-    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = "#451a03";
+    this.ctx.lineWidth = 1.2;
     this.ctx.stroke();
 
-    // 3. Center Spine Highlight
+    // Pivot Bead
     this.ctx.beginPath();
-    this.ctx.moveTo(0, 0);
-    this.ctx.lineTo(0, pointerH - 2);
-    this.ctx.strokeStyle = "rgba(255, 255, 255, 0.85)";
-    this.ctx.lineWidth = 1.8;
-    this.ctx.stroke();
-
-    // 4. Pivot Jewel at Top
-    this.ctx.beginPath();
-    this.ctx.arc(0, 0, 9, 0, Math.PI * 2);
-    const jewelGrad = this.ctx.createRadialGradient(-2, -3, 1, 0, 0, 9);
-    jewelGrad.addColorStop(0, "#34d399");
-    jewelGrad.addColorStop(0.5, "#059669");
-    jewelGrad.addColorStop(1, "#022c22");
-    this.ctx.fillStyle = jewelGrad;
+    this.ctx.arc(0, 0, 7.5, 0, Math.PI * 2);
+    this.ctx.fillStyle = "#1b4332";
     this.ctx.fill();
-
-    this.ctx.strokeStyle = "#fef08a";
-    this.ctx.lineWidth = 2.2;
+    this.ctx.strokeStyle = "#e9c46a";
+    this.ctx.lineWidth = 1.8;
     this.ctx.stroke();
 
     this.ctx.restore();
