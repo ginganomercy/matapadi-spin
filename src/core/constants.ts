@@ -1,7 +1,7 @@
 import { WheelSector } from "../types/wheel.ts";
 
 /**
- * Global constant definitions.
+ * Global constant definitions for Nordic Botanical Print Theme.
  * Follows Rule: All numeric thresholds must be named constants — never hardcoded inline.
  */
 
@@ -10,10 +10,10 @@ export const CANVAS_CONFIG = {
   DEFAULT_SCALE_DPR: 2,
   RIM_WIDTH_PX: 20,
   CENTER_HUB_RADIUS_PX: 56,
-  POINTER_WIDTH_PX: 28,
-  POINTER_HEIGHT_PX: 42,
-  PEG_COUNT: 24, // 24 brass pegs around rim
-  PEG_RADIUS_PX: 4.5,
+  POINTER_WIDTH_PX: 26,
+  POINTER_HEIGHT_PX: 40,
+  PEG_COUNT: 24, // 24 brass/wood rivets (3 rivets per 45-degree sector)
+  PEG_RADIUS_PX: 4.2,
 } as const;
 
 export const PHYSICS_CONFIG = {
@@ -21,17 +21,17 @@ export const PHYSICS_CONFIG = {
   MAX_ADDITIONAL_ROUNDS: 3,
   SPIN_DURATION_MS: 5000,
   DECELERATION_EXPONENT: 4, // easeOutQuart curve
-  POINTER_ANGLE_OFFSET_RAD: -Math.PI / 2, // Top needle at 12 o'clock (-90 deg)
-  SAFETY_MARGIN_RAD: 0.14, // Safe margin from slice borders
+  POINTER_ANGLE_OFFSET_RAD: -Math.PI / 2, // Top pointer at 12 o'clock (-90 deg)
+  SAFETY_MARGIN_RAD: 0.10, // Safe margin within 45-degree sector slice borders
 } as const;
 
 export const AUDIO_CONFIG = {
-  TICK_BASE_FREQ_HZ: 760,
-  TICK_FREQ_VARIANCE_HZ: 180,
+  TICK_BASE_FREQ_HZ: 720,
+  TICK_FREQ_VARIANCE_HZ: 160,
   TICK_DURATION_SEC: 0.04,
-  WIN_CHIME_FREQUENCIES: [523.25, 659.25, 783.99, 1046.5], // Harmonic fanfare
-  ZONK_FREQUENCIES: [260, 220, 180], // Discreet, dignified closure
-  DEFAULT_VOLUME: 0.45,
+  WIN_CHIME_FREQUENCIES: [523.25, 659.25, 783.99, 1046.5], // Warm acoustic chime
+  ZONK_FREQUENCIES: [260, 220, 180], // Dignified acoustic closure
+  DEFAULT_VOLUME: 0.40,
 } as const;
 
 export const STORAGE_KEYS = {
@@ -41,52 +41,92 @@ export const STORAGE_KEYS = {
 } as const;
 
 /**
- * Editorial Agritech Palette — Organic, mature, human-crafted.
- * Replaces generic AI candy colors with earthy agricultural tones:
- * 1. Ganci: Deep Cypress Green (#1b4332)
- * 2. Stiker: Fresh Eucalyptus / Sage (#3d7055)
- * 3. Refreshment: Warm Harvest Ochre (#c58940)
- * 4. Zonk: Muted Charcoal Earth (#343a40)
+ * Nordic Botanical Print Palette — 8 Balanced Sectors (4 Items x 2).
+ * Colors inspired by natural herbs, terracotta ceramics, dried oat grains, and peat earth:
+ * 1. Ganci: Sage Leaf Green (#4E6554)
+ * 2. Stiker: Warm Terracotta Clay (#BD6B42)
+ * 3. Refreshment: Dried Oat / Wheat Gold (#CBA258)
+ * 4. Zonk: Washed Peat Charcoal (#3A3E3B)
  */
 export const DEFAULT_SECTORS: readonly WheelSector[] = [
   {
-    id: "sec-ganci",
+    id: "sec-ganci-1",
     category: "ganci",
     label: "GANCI",
     description: "Souvenir Gantungan Kunci Eksklusif Matapadi",
-    weight: 25,
-    backgroundColor: "#1b4332", // Deep Cypress Green
-    textColor: "#fefae0",       // Warm Ivory
-    accentColor: "#e9c46a",     // Golden Wheat
+    weight: 12.5,
+    backgroundColor: "#4E6554", // Sage Leaf Green
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#E0D7C6",     // Soft Oat
   },
   {
-    id: "sec-stiker",
+    id: "sec-stiker-1",
     category: "stiker",
     label: "STIKER",
     description: "Paket Stiker Koleksi Smart Agriculture",
-    weight: 30,
-    backgroundColor: "#3d7055", // Fresh Eucalyptus / Sage
-    textColor: "#fefae0",       // Warm Ivory
-    accentColor: "#c7f9cc",     // Pale Sprout
+    weight: 15.0,
+    backgroundColor: "#BD6B42", // Warm Terracotta Clay
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#F5EBE1",     // Pale Linen
   },
   {
-    id: "sec-refreshment",
+    id: "sec-refreshment-1",
     category: "refreshment",
     label: "REFRESHMENT",
     description: "Voucher Konsumsi & Minuman Segar Booth",
-    weight: 15,
-    backgroundColor: "#c58940", // Warm Harvest Ochre
-    textColor: "#ffffff",       // Clean White
-    accentColor: "#fefae0",     // Warm Ivory
+    weight: 7.5,
+    backgroundColor: "#CBA258", // Dried Oat / Wheat Gold
+    textColor: "#2B2823",       // Deep Slate Brown
+    accentColor: "#FAF8F5",     // Warm Cotton White
   },
   {
-    id: "sec-zonk",
+    id: "sec-zonk-1",
     category: "zonk",
     label: "ZONK",
     description: "Kesempatan Anda telah selesai. Terima kasih telah berpartisipasi.",
-    weight: 30,
-    backgroundColor: "#343a40", // Dignified Charcoal Earth
-    textColor: "#e9ecef",       // Soft Slate
-    accentColor: "#adb5bd",     // Muted Gray
+    weight: 15.0,
+    backgroundColor: "#3A3E3B", // Washed Peat Charcoal
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#B5B9B6",     // Soft Pebble
+  },
+  {
+    id: "sec-ganci-2",
+    category: "ganci",
+    label: "GANCI",
+    description: "Souvenir Gantungan Kunci Eksklusif Matapadi",
+    weight: 12.5,
+    backgroundColor: "#4E6554", // Sage Leaf Green
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#E0D7C6",     // Soft Oat
+  },
+  {
+    id: "sec-stiker-2",
+    category: "stiker",
+    label: "STIKER",
+    description: "Paket Stiker Koleksi Smart Agriculture",
+    weight: 15.0,
+    backgroundColor: "#BD6B42", // Warm Terracotta Clay
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#F5EBE1",     // Pale Linen
+  },
+  {
+    id: "sec-refreshment-2",
+    category: "refreshment",
+    label: "REFRESHMENT",
+    description: "Voucher Konsumsi & Minuman Segar Booth",
+    weight: 7.5,
+    backgroundColor: "#CBA258", // Dried Oat / Wheat Gold
+    textColor: "#2B2823",       // Deep Slate Brown
+    accentColor: "#FAF8F5",     // Warm Cotton White
+  },
+  {
+    id: "sec-zonk-2",
+    category: "zonk",
+    label: "ZONK",
+    description: "Kesempatan Anda telah selesai. Terima kasih telah berpartisipasi.",
+    weight: 15.0,
+    backgroundColor: "#3A3E3B", // Washed Peat Charcoal
+    textColor: "#FAF8F5",       // Warm Cotton White
+    accentColor: "#B5B9B6",     // Soft Pebble
   },
 ] as const;

@@ -8,8 +8,12 @@ export interface WheelCanvasOptions {
 }
 
 /**
- * Editorial Agritech Canvas Wheel Renderer.
- * Designed with restrained craftsmanship, organic earth tones, and tactile physical feedback.
+ * Nordic Botanical Print Canvas Wheel Engine.
+ * Features:
+ * - 8 balanced botanical sectors (4 items x 2 alternating)
+ * - Automatic 180-degree flip correction (Zero inverted / upside-down text)
+ * - Natural tactile materials: Light Birch Wood, Matte Brass, Porcelain Center Hub
+ * - Elegant editorial serif typography
  */
 export class WheelCanvas {
   private readonly canvas: HTMLCanvasElement;
@@ -81,7 +85,7 @@ export class WheelCanvas {
     if (currentPegIndex !== this.lastPegPassedIndex) {
       this.lastPegPassedIndex = currentPegIndex;
       const normalizedVelocity = Math.min(1.0, Math.abs(angularVelocity) / 12);
-      this.pointerDeflectionAngleRad = -0.30 * Math.min(1.0, 0.40 + normalizedVelocity);
+      this.pointerDeflectionAngleRad = -0.28 * Math.min(1.0, 0.40 + normalizedVelocity);
       this.onPegHit?.(normalizedVelocity);
     } else {
       this.pointerDeflectionAngleRad *= 0.82;
@@ -104,16 +108,16 @@ export class WheelCanvas {
 
     this.ctx.clearRect(0, 0, size, size);
 
-    // 1. Soft Warm Ambient Shadow
+    // 1. Soft Diffuse Shadow (Natural Linen Shadow)
     this.ctx.save();
     this.ctx.beginPath();
-    this.ctx.arc(center, center + 6, radius + CANVAS_CONFIG.RIM_WIDTH_PX, 0, Math.PI * 2);
-    this.ctx.fillStyle = "rgba(20, 40, 30, 0.12)";
-    this.ctx.filter = "blur(14px)";
+    this.ctx.arc(center, center + 5, radius + CANVAS_CONFIG.RIM_WIDTH_PX, 0, Math.PI * 2);
+    this.ctx.fillStyle = "rgba(40, 36, 30, 0.08)";
+    this.ctx.filter = "blur(12px)";
     this.ctx.fill();
     this.ctx.restore();
 
-    // 2. Rotated Disc Layer
+    // 2. Rotated Wheel Disc
     this.ctx.save();
     this.ctx.translate(center, center);
     this.ctx.rotate(this.currentAngleRad);
@@ -125,10 +129,10 @@ export class WheelCanvas {
 
     this.ctx.restore();
 
-    // 3. Center Hub with official Matapadi Logo
+    // 3. Porcelain & Brass Center Hub
     this.drawCenterHub(center);
 
-    // 4. Top Needle with tactile brass shading
+    // 4. Teardrop Brass Pointer
     this.drawPointer(center, radius);
   }
 
@@ -151,11 +155,11 @@ export class WheelCanvas {
       this.ctx.fillStyle = sector.backgroundColor;
       this.ctx.fill();
 
-      // Subtle warm organic radial gradient
-      const gradient = this.ctx.createRadialGradient(0, 0, radius * 0.2, 0, 0, radius);
-      gradient.addColorStop(0, "rgba(255, 255, 255, 0.12)");
-      gradient.addColorStop(0.7, "rgba(0, 0, 0, 0.0)");
-      gradient.addColorStop(1, "rgba(0, 0, 0, 0.20)");
+      // Tactile organic depth sheen
+      const gradient = this.ctx.createRadialGradient(0, 0, radius * 0.25, 0, 0, radius);
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.10)");
+      gradient.addColorStop(0.75, "rgba(0, 0, 0, 0.0)");
+      gradient.addColorStop(1, "rgba(0, 0, 0, 0.16)");
       this.ctx.fillStyle = gradient;
       this.ctx.fill();
 
@@ -163,59 +167,69 @@ export class WheelCanvas {
     }
   }
 
+  /**
+   * Editorial Typography with Automatic 180-Degree Flip Correction.
+   * Ensures letters are ALWAYS upright and readable from any angle.
+   */
   private drawSectorContent(sector: WheelSector, midAngle: number, radius: number): void {
-    this.ctx.save();
-    this.ctx.rotate(midAngle);
+    const textRadius = radius * 0.66;
+    const iconRadius = radius * 0.82;
 
-    const iconPosR = radius * 0.80;
-    const textStartR = radius * 0.58;
+    // Normalize midAngle to [0, 2PI)
+    const normAngle = ((midAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    // Bottom hemisphere is between PI/2 (90 deg) and 3PI/2 (270 deg)
+    const isBottomHalf = normAngle > Math.PI * 0.5 && normAngle < Math.PI * 1.5;
 
     // 1. Draw Sector Icon
     this.ctx.save();
-    this.ctx.translate(iconPosR, 0);
-    this.ctx.rotate(Math.PI / 2);
+    this.ctx.rotate(midAngle);
+    this.ctx.translate(iconRadius, 0);
+    this.ctx.rotate(isBottomHalf ? -Math.PI / 2 : Math.PI / 2);
     this.drawSectorIcon(sector.category);
     this.ctx.restore();
 
-    // 2. Draw Editorial Radial Typography
+    // 2. Draw Tangential Label with Flip Correction
     this.ctx.save();
-    this.ctx.translate(textStartR, 0);
+    this.ctx.rotate(midAngle);
+    this.ctx.translate(textRadius, 0);
+
+    // Tangential rotation: flip 180 degrees if in bottom half so text is upright
+    this.ctx.rotate(isBottomHalf ? -Math.PI / 2 : Math.PI / 2);
 
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
 
-    // Text with soft shadow
-    this.ctx.font = "800 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    this.ctx.letterSpacing = "1.5px";
-    this.ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
-    this.ctx.shadowBlur = 4;
+    // Editorial Serif Font Stack (Georgia, Charter, Serif)
+    this.ctx.font = "bold 13.5px Georgia, Charter, 'Times New Roman', serif";
+    this.ctx.letterSpacing = "1.2px";
     this.ctx.fillStyle = sector.textColor;
-    this.ctx.fillText(sector.label, 0, -2);
+    this.ctx.shadowColor = "rgba(0, 0, 0, 0.35)";
+    this.ctx.shadowBlur = 3;
+    this.ctx.fillText(sector.label, 0, 0);
 
-    // Subtle sub-label
+    // Subtle subtext
     this.ctx.shadowBlur = 0;
-    this.ctx.font = "600 8.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-    this.ctx.letterSpacing = "0.5px";
+    this.ctx.font = "600 7.5px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+    this.ctx.letterSpacing = "0.8px";
     this.ctx.fillStyle = sector.accentColor;
 
     if (sector.category === "ganci") {
-      this.ctx.fillText("SOUVENIR", 0, 16);
+      this.ctx.fillText("SOUVENIR", 0, 14);
     } else if (sector.category === "stiker") {
-      this.ctx.fillText("EXCLUSIVE", 0, 16);
+      this.ctx.fillText("KOLEKSI", 0, 14);
     } else if (sector.category === "refreshment") {
-      this.ctx.fillText("BOOTH DRINK", 0, 16);
+      this.ctx.fillText("KONSUMSI", 0, 14);
     } else {
-      this.ctx.fillText("SELESAI", 0, 16);
+      this.ctx.fillText("SELESAI", 0, 14);
     }
 
-    this.ctx.restore();
     this.ctx.restore();
   }
 
   private drawSectorIcon(category: string): void {
-    this.ctx.font = "24px system-ui, -apple-system, sans-serif";
-    this.ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-    this.ctx.shadowBlur = 4;
+    this.ctx.font = "20px system-ui, -apple-system, sans-serif";
+    this.ctx.shadowColor = "rgba(0, 0, 0, 0.25)";
+    this.ctx.shadowBlur = 3;
 
     if (category === "ganci") {
       this.ctx.fillText("🏷️", 0, 0);
@@ -240,8 +254,8 @@ export class WheelCanvas {
       this.ctx.beginPath();
       this.ctx.moveTo(0, 0);
       this.ctx.lineTo(cosA * radius, sinA * radius);
-      this.ctx.strokeStyle = "rgba(233, 196, 106, 0.65)"; // Warm brushed brass
-      this.ctx.lineWidth = 2.5;
+      this.ctx.strokeStyle = "rgba(250, 248, 245, 0.75)"; // Warm Oat Linen divider
+      this.ctx.lineWidth = 1.8;
       this.ctx.stroke();
     }
   }
@@ -255,20 +269,20 @@ export class WheelCanvas {
     this.ctx.arc(0, 0, radius, 0, Math.PI * 2, true);
     this.ctx.closePath();
 
-    // Brushed Brass Rim Gradient
+    // Natural Birch Wood & Warm Brass Gradient
     const rimGradient = this.ctx.createRadialGradient(0, 0, radius, 0, 0, outerRadius);
-    rimGradient.addColorStop(0, "#78350f");
-    rimGradient.addColorStop(0.3, "#c58940");
-    rimGradient.addColorStop(0.6, "#e9c46a");
-    rimGradient.addColorStop(0.85, "#b45309");
-    rimGradient.addColorStop(1, "#451a03");
+    rimGradient.addColorStop(0, "#735E43");
+    rimGradient.addColorStop(0.3, "#B39F7D");
+    rimGradient.addColorStop(0.6, "#D4C5A9");
+    rimGradient.addColorStop(0.85, "#9C8564");
+    rimGradient.addColorStop(1, "#52422E");
     this.ctx.fillStyle = rimGradient;
     this.ctx.fill();
 
     this.ctx.beginPath();
     this.ctx.arc(0, 0, outerRadius, 0, Math.PI * 2);
-    this.ctx.strokeStyle = "#d4a373";
-    this.ctx.lineWidth = 1.5;
+    this.ctx.strokeStyle = "#B39F7D";
+    this.ctx.lineWidth = 1.2;
     this.ctx.stroke();
   }
 
@@ -285,21 +299,21 @@ export class WheelCanvas {
 
       this.ctx.beginPath();
       this.ctx.arc(x, y + 1, pegRadius, 0, Math.PI * 2);
-      this.ctx.fillStyle = "rgba(0, 0, 0, 0.35)";
+      this.ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
       this.ctx.fill();
 
       this.ctx.beginPath();
       this.ctx.arc(x, y, pegRadius, 0, Math.PI * 2);
       const pegGrad = this.ctx.createRadialGradient(x - 1, y - 1, 0.4, x, y, pegRadius);
-      pegGrad.addColorStop(0, "#ffffff");
-      pegGrad.addColorStop(0.4, "#fefae0");
-      pegGrad.addColorStop(0.8, "#c58940");
-      pegGrad.addColorStop(1, "#78350f");
+      pegGrad.addColorStop(0, "#FAF8F5");
+      pegGrad.addColorStop(0.4, "#E8DFD1");
+      pegGrad.addColorStop(0.8, "#B39F7D");
+      pegGrad.addColorStop(1, "#5C4A32");
       this.ctx.fillStyle = pegGrad;
       this.ctx.fill();
 
-      this.ctx.strokeStyle = "#451a03";
-      this.ctx.lineWidth = 0.6;
+      this.ctx.strokeStyle = "#3E301F";
+      this.ctx.lineWidth = 0.5;
       this.ctx.stroke();
     }
   }
@@ -311,31 +325,31 @@ export class WheelCanvas {
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(center, center + 3, hubRadius + 1, 0, Math.PI * 2);
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.28)";
-    this.ctx.filter = "blur(6px)";
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.22)";
+    this.ctx.filter = "blur(5px)";
     this.ctx.fill();
     this.ctx.restore();
 
-    // Brushed Gold Frame
+    // Matte Brass Rim
     this.ctx.beginPath();
     this.ctx.arc(center, center, hubRadius, 0, Math.PI * 2);
     const ringGrad = this.ctx.createLinearGradient(center - hubRadius, center - hubRadius, center + hubRadius, center + hubRadius);
-    ringGrad.addColorStop(0, "#e9c46a");
-    ringGrad.addColorStop(0.5, "#c58940");
-    ringGrad.addColorStop(1, "#78350f");
+    ringGrad.addColorStop(0, "#D4C5A9");
+    ringGrad.addColorStop(0.5, "#B39F7D");
+    ringGrad.addColorStop(1, "#6B583E");
     this.ctx.fillStyle = ringGrad;
     this.ctx.fill();
 
-    this.ctx.strokeStyle = "#ffffff";
-    this.ctx.lineWidth = 1.8;
+    this.ctx.strokeStyle = "#FAF8F5";
+    this.ctx.lineWidth = 1.5;
     this.ctx.stroke();
 
-    // Inner Disc with Logo
+    // Inner Porcelain White Medallion
     const innerRadius = hubRadius - 5;
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(center, center, innerRadius, 0, Math.PI * 2);
-    this.ctx.fillStyle = "#ffffff";
+    this.ctx.fillStyle = "#FFFFFF";
     this.ctx.fill();
 
     this.ctx.clip();
@@ -352,12 +366,12 @@ export class WheelCanvas {
     }
     this.ctx.restore();
 
-    // Subtle glass bevel
+    // Subtle porcelain rim ring
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(center, center, innerRadius, 0, Math.PI * 2);
-    this.ctx.strokeStyle = "rgba(197, 137, 64, 0.4)";
-    this.ctx.lineWidth = 1.5;
+    this.ctx.strokeStyle = "rgba(179, 159, 125, 0.4)";
+    this.ctx.lineWidth = 1.2;
     this.ctx.stroke();
     this.ctx.restore();
   }
@@ -372,18 +386,18 @@ export class WheelCanvas {
     this.ctx.translate(center, pointerBaseY);
     this.ctx.rotate(this.pointerDeflectionAngleRad);
 
-    // Pointer shadow
+    // Shadow
     this.ctx.beginPath();
     this.ctx.moveTo(0, pointerH + 2);
     this.ctx.lineTo(-pointerW / 2 - 2, 2);
     this.ctx.lineTo(pointerW / 2 + 2, 2);
     this.ctx.closePath();
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.20)";
     this.ctx.filter = "blur(3px)";
     this.ctx.fill();
     this.ctx.filter = "none";
 
-    // Tactile Brass Needle
+    // Teardrop Brass Needle
     this.ctx.beginPath();
     this.ctx.moveTo(0, pointerH);
     this.ctx.lineTo(-pointerW / 2, 0);
@@ -391,24 +405,24 @@ export class WheelCanvas {
     this.ctx.closePath();
 
     const arrowGrad = this.ctx.createLinearGradient(-pointerW / 2, 0, pointerW / 2, pointerH);
-    arrowGrad.addColorStop(0, "#fefae0");
-    arrowGrad.addColorStop(0.3, "#e9c46a");
-    arrowGrad.addColorStop(0.8, "#c58940");
-    arrowGrad.addColorStop(1, "#78350f");
+    arrowGrad.addColorStop(0, "#FAF8F5");
+    arrowGrad.addColorStop(0.3, "#D4C5A9");
+    arrowGrad.addColorStop(0.8, "#B39F7D");
+    arrowGrad.addColorStop(1, "#5C4A32");
     this.ctx.fillStyle = arrowGrad;
     this.ctx.fill();
 
-    this.ctx.strokeStyle = "#451a03";
-    this.ctx.lineWidth = 1.2;
+    this.ctx.strokeStyle = "#3E301F";
+    this.ctx.lineWidth = 1.0;
     this.ctx.stroke();
 
-    // Pivot Bead
+    // Emerald Pivot Jewel
     this.ctx.beginPath();
-    this.ctx.arc(0, 0, 7.5, 0, Math.PI * 2);
-    this.ctx.fillStyle = "#1b4332";
+    this.ctx.arc(0, 0, 7.0, 0, Math.PI * 2);
+    this.ctx.fillStyle = "#4E6554";
     this.ctx.fill();
-    this.ctx.strokeStyle = "#e9c46a";
-    this.ctx.lineWidth = 1.8;
+    this.ctx.strokeStyle = "#D4C5A9";
+    this.ctx.lineWidth = 1.6;
     this.ctx.stroke();
 
     this.ctx.restore();

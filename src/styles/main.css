@@ -2,23 +2,27 @@
 
 @layer base {
   body {
-    background-color: #f7f8f5;
-    color: #1c1917;
+    background-color: #f7f5f0;
+    color: #2b2823;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: Georgia, Charter, "Times New Roman", serif;
   }
 }
 
-/* Subtle, organic linen grain & soft natural light */
-.bg-natural-editorial {
-  background-color: #f8f9f6;
+/* Warm cotton paper & diffuse natural light */
+.bg-cotton-paper {
+  background-color: #f7f5f0;
   background-image: 
-    radial-gradient(circle at 20% 10%, rgba(27, 67, 50, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(197, 137, 64, 0.06) 0%, transparent 45%),
-    linear-gradient(180deg, #f7f8f5 0%, #f3f5f0 100%);
+    radial-gradient(circle at 15% 10%, rgba(78, 101, 84, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(189, 107, 66, 0.04) 0%, transparent 45%),
+    linear-gradient(180deg, #f9f8f5 0%, #f4f1ea 100%);
   background-size: 100% 100%;
 }
 
-/* Subtle scrollbar */
+/* Minimalist subtle scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -26,9 +30,9 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 113, 108, 0.25);
+  background: rgba(179, 159, 125, 0.35);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 113, 108, 0.4);
+  background: rgba(179, 159, 125, 0.55);
 }

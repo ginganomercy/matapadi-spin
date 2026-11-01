@@ -3,30 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Matapadi Smart Agriculture — Interactive Lucky Wheel</title>
+  <title>Matapadi Smart Agriculture — Nordic Botanical Lucky Wheel</title>
   <link rel="stylesheet" href="/src/styles/main.css" />
-  <meta name="description" content="Kios interaktif roda keberuntungan Matapadi Smart Agriculture." />
+  <meta name="description" content="Kios interaktif roda keberuntungan Matapadi Smart Agriculture bertema Nordic Botanical Print." />
   <link rel="icon" type="image/png" href="/logo-matapadi-smart-agriculture.png" />
 </head>
-<body class="bg-natural-editorial min-h-screen text-stone-900 flex flex-col antialiased selection:bg-emerald-900 selection:text-amber-200">
+<body class="bg-cotton-paper min-h-screen text-[#2B2823] flex flex-col antialiased selection:bg-[#4E6554] selection:text-[#FAF8F5]">
   
-  <!-- Refined Editorial Header -->
-  <header class="w-full bg-white border-b border-stone-200/80 sticky top-0 z-30">
+  <!-- Nordic Botanical Header -->
+  <header class="w-full bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E8E3DA] sticky top-0 z-30">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       
-      <!-- Brand & Official Logo -->
+      <!-- Official Brand Identity -->
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-white p-0.5 border border-stone-200 flex items-center justify-center shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-white p-0.5 border border-[#E0D7C6] flex items-center justify-center shrink-0 shadow-xs">
           <img src="/logo-matapadi-smart-agriculture.png" alt="Matapadi Smart Agriculture" class="w-full h-full object-contain" />
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-base font-extrabold tracking-tight text-stone-900">MATAPADI</span>
-            <span class="text-[10px] font-semibold text-stone-500 uppercase tracking-widest px-1.5 py-0.5 rounded bg-stone-100 border border-stone-200">
-              BOOTH KIOSK
+            <span class="text-base font-bold font-editorial tracking-tight text-[#2B2823]">MATAPADI</span>
+            <span class="text-[9.5px] font-semibold text-[#665D4F] uppercase tracking-widest px-2 py-0.5 rounded-full bg-[#EFECE6] border border-[#E0D7C6]">
+              BOTANICAL KIOSK
             </span>
           </div>
-          <p class="text-[11px] text-stone-500 font-normal">Smart Agriculture Interactive Lucky Draw</p>
+          <p class="text-[11px] text-[#786E5E]">Smart Agriculture • Interactive Lucky Draw</p>
         </div>
       </div>
 
@@ -36,9 +36,9 @@
           id="btn-toggle-sound"
           type="button"
           aria-label="Toggle Sound"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200/80 text-xs font-medium text-stone-700 transition border border-stone-200 cursor-pointer"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EFECE6] hover:bg-[#E5E0D6] text-xs font-medium text-[#4D4539] transition border border-[#DDD5C7] cursor-pointer"
         >
-          <span id="sound-icon-container" class="w-3.5 h-3.5 flex items-center justify-center text-stone-600">
+          <span id="sound-icon-container" class="w-3.5 h-3.5 flex items-center justify-center text-[#5C5345]">
             <svg id="svg-sound-on" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
@@ -50,14 +50,14 @@
           <span id="sound-label" class="hidden sm:inline">Suara</span>
         </button>
 
-        <!-- Booth Operator Reset for next visitor -->
+        <!-- Booth Operator Reset -->
         <button
           id="btn-reset-kiosk"
           type="button"
-          title="Reset sesi untuk pengunjung berikutnya"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-xs font-medium text-stone-700 transition border border-stone-200 cursor-pointer"
+          title="Reset sesi untuk pengunjung baru"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EFECE6] hover:bg-[#E5E0D6] text-xs font-medium text-[#4D4539] transition border border-[#DDD5C7] cursor-pointer"
         >
-          <svg class="w-3.5 h-3.5 text-stone-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg class="w-3.5 h-3.5 text-[#5C5345]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
           <span class="hidden sm:inline">Peserta Baru</span>
@@ -66,18 +66,18 @@
     </div>
   </header>
 
-  <!-- Main Content Layout -->
+  <!-- Main Responsive Stage -->
   <main class="flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 lg:p-8 flex flex-col lg:flex-row gap-8 items-center lg:items-start justify-center">
     
-    <!-- Left Stage: Canvas Wheel & Clean Button -->
+    <!-- Left Stage: Botanical Wheel & Clean Trigger -->
     <section class="flex-1 flex flex-col items-center w-full max-w-lg">
       
-      <!-- Wheel Enclosure -->
-      <div class="relative w-full flex flex-col items-center justify-center p-5 md:p-6 rounded-2xl bg-white border border-stone-200/80 shadow-xs">
+      <!-- Wheel Enclosure Card -->
+      <div class="relative w-full flex flex-col items-center justify-center p-5 md:p-6 rounded-3xl bg-[#FDFCF9] border border-[#E8E3DA] shadow-sm">
         
         <!-- Canvas Wheel Area -->
         <div id="canvas-container" class="relative flex items-center justify-center w-full max-w-[460px] aspect-square">
-          <canvas id="wheel-canvas" class="touch-none select-none max-w-full drop-shadow-md"></canvas>
+          <canvas id="wheel-canvas" class="touch-none select-none max-w-full drop-shadow-sm"></canvas>
         </div>
 
         <!-- Spin Trigger Controls -->
@@ -85,49 +85,49 @@
           <button
             id="btn-spin"
             type="button"
-            class="w-full py-3.5 px-6 rounded-xl bg-emerald-950 hover:bg-emerald-900 active:bg-black text-amber-200 font-bold text-sm tracking-wider uppercase transition shadow-sm cursor-pointer disabled:bg-stone-200 disabled:text-stone-400 disabled:border-stone-300 disabled:cursor-not-allowed border border-emerald-900 flex items-center justify-center gap-2"
+            class="w-full py-3.5 px-6 rounded-xl bg-[#34463A] hover:bg-[#28372D] active:bg-[#1E2922] text-[#FAF8F5] font-semibold text-sm tracking-wider uppercase transition shadow-xs cursor-pointer disabled:bg-[#E5E0D6] disabled:text-[#9C9282] disabled:cursor-not-allowed border border-[#B39F7D]/40 flex items-center justify-center gap-2"
           >
-            <span id="spin-btn-icon" class="w-4 h-4 text-amber-300">
+            <span id="spin-btn-icon" class="w-4 h-4 text-[#E0D7C6]">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </span>
-            <span id="spin-text">PUTAR RODA</span>
+            <span id="spin-text">PUTAR RODA KEBERUNTUNGAN</span>
           </button>
           
-          <span id="spin-helper-text" class="text-xs text-stone-500 font-normal">
+          <span id="spin-helper-text" class="text-xs text-[#786E5E] font-normal">
             1 kesempatan per pengunjung booth
           </span>
         </div>
       </div>
     </section>
 
-    <!-- Right Column: Editorial Prize Registry & History -->
+    <!-- Right Column: Botanical Catalog & History -->
     <aside class="w-full lg:w-80 flex flex-col gap-5">
       
-      <!-- Prize Registry Panel -->
-      <div class="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-xs">
-        <div class="flex items-center justify-between mb-3 border-b border-stone-100 pb-2.5">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-stone-900">
-            Daftar Hadiah Booth
+      <!-- Botanical Prize Catalog -->
+      <div class="p-5 rounded-3xl bg-[#FDFCF9] border border-[#E8E3DA] shadow-xs">
+        <div class="flex items-center justify-between mb-3 border-b border-[#EFECE6] pb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider font-editorial text-[#2B2823]">
+            Katalog Hadiah Booth
           </h2>
-          <span class="text-[10px] text-stone-400 font-mono">4 ITEM</span>
+          <span class="text-[10px] text-[#8C806F] font-mono">4 ITEM</span>
         </div>
         
-        <!-- Clean Editorial Item List -->
-        <div class="divide-y divide-stone-100 text-xs">
+        <!-- Ticket-style List with dashed separators -->
+        <div class="divide-y divide-dashed divide-[#E8E3DA] text-xs">
           
           <!-- Item 1: Ganci -->
           <div class="py-2.5 flex items-start justify-between gap-3">
             <div class="flex items-start gap-2.5">
-              <span class="text-stone-400 font-mono text-[11px] mt-0.5">01</span>
+              <span class="text-[#8C806F] font-mono text-[11px] mt-0.5">01</span>
               <div>
-                <p class="font-bold text-stone-900 leading-tight">Ganci Matapadi</p>
-                <p class="text-[11px] text-stone-500 mt-0.5">Souvenir eksklusif gantungan kunci</p>
+                <p class="font-bold text-[#2B2823] leading-tight">Ganci Matapadi</p>
+                <p class="text-[11px] text-[#786E5E] mt-0.5">Souvenir eksklusif gantungan kunci</p>
               </div>
             </div>
-            <span class="text-[10px] font-medium text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200/50 shrink-0">
+            <span class="text-[10px] font-medium text-[#384A3E] bg-[#EBF0EC] px-2 py-0.5 rounded border border-[#CCD8CF] shrink-0">
               Souvenir
             </span>
           </div>
@@ -135,13 +135,13 @@
           <!-- Item 2: Stiker -->
           <div class="py-2.5 flex items-start justify-between gap-3">
             <div class="flex items-start gap-2.5">
-              <span class="text-stone-400 font-mono text-[11px] mt-0.5">02</span>
+              <span class="text-[#8C806F] font-mono text-[11px] mt-0.5">02</span>
               <div>
-                <p class="font-bold text-stone-900 leading-tight">Stiker Eksklusif</p>
-                <p class="text-[11px] text-stone-500 mt-0.5">Pack stiker Smart Agriculture</p>
+                <p class="font-bold text-[#2B2823] leading-tight">Stiker Eksklusif</p>
+                <p class="text-[11px] text-[#786E5E] mt-0.5">Pack koleksi stiker Smart Agriculture</p>
               </div>
             </div>
-            <span class="text-[10px] font-medium text-stone-700 bg-stone-100 px-2 py-0.5 rounded border border-stone-200 shrink-0">
+            <span class="text-[10px] font-medium text-[#7D4629] bg-[#F7ECE4] px-2 py-0.5 rounded border border-[#E8D1C2] shrink-0">
               Koleksi
             </span>
           </div>
@@ -149,13 +149,13 @@
           <!-- Item 3: Refreshment -->
           <div class="py-2.5 flex items-start justify-between gap-3">
             <div class="flex items-start gap-2.5">
-              <span class="text-stone-400 font-mono text-[11px] mt-0.5">03</span>
+              <span class="text-[#8C806F] font-mono text-[11px] mt-0.5">03</span>
               <div>
-                <p class="font-bold text-stone-900 leading-tight">Refreshment</p>
-                <p class="text-[11px] text-stone-500 mt-0.5">Voucher minuman & snack booth</p>
+                <p class="font-bold text-[#2B2823] leading-tight">Refreshment</p>
+                <p class="text-[11px] text-[#786E5E] mt-0.5">Voucher minuman & snack booth</p>
               </div>
             </div>
-            <span class="text-[10px] font-semibold text-amber-900 bg-amber-50 px-2 py-0.5 rounded border border-amber-200/60 shrink-0">
+            <span class="text-[10px] font-medium text-[#705527] bg-[#F8F2E6] px-2 py-0.5 rounded border border-[#E8DCBF] shrink-0">
               Konsumsi
             </span>
           </div>
@@ -163,42 +163,42 @@
           <!-- Item 4: Zonk -->
           <div class="py-2.5 flex items-start justify-between gap-3">
             <div class="flex items-start gap-2.5">
-              <span class="text-stone-400 font-mono text-[11px] mt-0.5">04</span>
+              <span class="text-[#8C806F] font-mono text-[11px] mt-0.5">04</span>
               <div>
-                <p class="font-bold text-stone-900 leading-tight">ZONK</p>
-                <p class="text-[11px] text-stone-500 mt-0.5">Kesempatan selesai (tidak dapat diulang)</p>
+                <p class="font-bold text-[#2B2823] leading-tight">ZONK</p>
+                <p class="text-[11px] text-[#786E5E] mt-0.5">Kesempatan selesai (tidak dapat diulang)</p>
               </div>
             </div>
-            <span class="text-[10px] font-medium text-stone-500 bg-stone-100 px-2 py-0.5 rounded border border-stone-200 shrink-0">
+            <span class="text-[10px] font-medium text-[#595C5A] bg-[#EFEFEF] px-2 py-0.5 rounded border border-[#DCDCDC] shrink-0">
               Selesai
             </span>
           </div>
 
         </div>
 
-        <div class="mt-3.5 pt-3 border-t border-stone-100 text-[11px] text-stone-400 leading-relaxed">
+        <div class="mt-3.5 pt-3 border-t border-[#EFECE6] text-[11px] text-[#8C806F] leading-relaxed">
           Setiap pengunjung berhak atas 1 kali putaran. Apabila mendapatkan Zonk, kesempatan putaran dinyatakan selesai.
         </div>
       </div>
 
       <!-- History Card -->
-      <div class="p-5 rounded-2xl bg-white border border-stone-200/80 shadow-xs flex flex-col">
-        <div class="flex items-center justify-between mb-3 border-b border-stone-100 pb-2.5">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-stone-900">
+      <div class="p-5 rounded-3xl bg-[#FDFCF9] border border-[#E8E3DA] shadow-xs flex flex-col">
+        <div class="flex items-center justify-between mb-3 border-b border-[#EFECE6] pb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider font-editorial text-[#2B2823]">
             Riwayat Putaran
           </h2>
           <button
             id="btn-clear-history"
             type="button"
-            class="text-[11px] text-stone-500 hover:text-stone-900 font-medium cursor-pointer transition hover:underline"
+            class="text-[11px] text-[#786E5E] hover:text-[#2B2823] font-medium cursor-pointer transition hover:underline"
           >
             Hapus
           </button>
         </div>
 
         <!-- Empty state -->
-        <div id="history-empty" class="py-6 text-center text-stone-400 text-xs">
-          <p class="font-medium text-stone-600">Belum ada riwayat.</p>
+        <div id="history-empty" class="py-6 text-center text-[#9C9282] text-xs">
+          <p class="font-medium text-[#4D4539]">Belum ada riwayat.</p>
           <p class="text-[11px] mt-0.5">Putar roda untuk memulai sesi.</p>
         </div>
 
@@ -210,8 +210,8 @@
   </main>
 
   <!-- Clean Footer -->
-  <footer class="w-full py-4 text-center text-xs text-stone-400 border-t border-stone-200/60">
-    <p>© 2026 Matapadi Smart Agriculture. Official Event Kiosk System.</p>
+  <footer class="w-full py-4 text-center text-xs text-[#8C806F] border-t border-[#E8E3DA]">
+    <p>© 2026 Matapadi Smart Agriculture. Official Botanical Exhibition Kiosk.</p>
   </footer>
 
   <!-- Result Announcement Modal Dialog -->
@@ -220,18 +220,18 @@
     tabindex="-1"
     role="dialog"
     aria-modal="true"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/60 backdrop-blur-xs p-4 hidden opacity-0 transition-opacity duration-200"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-[#24211D]/60 backdrop-blur-xs p-4 hidden opacity-0 transition-opacity duration-200"
   >
     <div
       id="modal-box"
-      class="w-full max-w-sm bg-white rounded-2xl p-6 shadow-xl border border-stone-200 transform scale-95 opacity-0 transition-all duration-200 flex flex-col items-center text-center relative"
+      class="w-full max-w-sm bg-[#FDFCF9] rounded-3xl p-6 shadow-xl border border-[#E0D7C6] transform scale-95 opacity-0 transition-all duration-200 flex flex-col items-center text-center relative"
     >
       <!-- Close button -->
       <button
         id="btn-close-modal"
         type="button"
         aria-label="Tutup Dialog"
-        class="absolute top-4 right-4 text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-stone-100 transition cursor-pointer"
+        class="absolute top-4 right-4 text-[#8C806F] hover:text-[#2B2823] p-1 rounded-lg hover:bg-[#EFECE6] transition cursor-pointer"
       >
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -239,18 +239,18 @@
       </button>
 
       <!-- Brand Logo in Modal -->
-      <div class="w-12 h-12 rounded-xl bg-white p-0.5 border border-stone-200 mb-3 flex items-center justify-center shadow-xs">
+      <div class="w-12 h-12 rounded-2xl bg-white p-0.5 border border-[#E0D7C6] mb-3 flex items-center justify-center shadow-xs">
         <img src="/logo-matapadi-smart-agriculture.png" alt="Matapadi Logo" class="w-full h-full object-contain" />
       </div>
 
       <!-- Title & Details -->
-      <p id="modal-title" class="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+      <p id="modal-title" class="text-xs font-semibold text-[#786E5E] uppercase tracking-wider font-editorial">
         Hasil Putaran
       </p>
-      <h3 id="modal-label" class="text-3xl font-black text-stone-900 my-2 tracking-tight">
+      <h3 id="modal-label" class="text-3xl font-bold font-editorial text-[#2B2823] my-2 tracking-tight">
         ZONK
       </h3>
-      <p id="modal-desc" class="text-xs text-stone-600 mb-6 leading-relaxed max-w-xs">
+      <p id="modal-desc" class="text-xs text-[#5C5345] mb-6 leading-relaxed max-w-xs">
         Deskripsi hasil putaran.
       </p>
 
@@ -258,7 +258,7 @@
       <button
         id="btn-modal-action"
         type="button"
-        class="w-full py-3 px-5 rounded-xl bg-stone-900 hover:bg-black text-white font-semibold text-sm transition cursor-pointer"
+        class="w-full py-3 px-5 rounded-xl bg-[#34463A] hover:bg-[#28372D] text-[#FAF8F5] font-semibold text-sm transition cursor-pointer"
       >
         Tutup
       </button>
