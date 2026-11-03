@@ -75,16 +75,35 @@ function initApplication(): void {
     }
   };
 
-  const resetLockout = () => {
+  // Toast feedback notification for operator actions
+  let toastTimer: number | undefined;
+  const showToast = (message: string, durationMs: number = 1800): void => {
+    const toast = document.getElementById("operator-toast");
+    const toastMsg = document.getElementById("toast-message");
+    if (!toast || !toastMsg) return;
+
+    window.clearTimeout(toastTimer);
+    toastMsg.textContent = message;
+    toast.classList.remove("opacity-0", "-translate-y-2");
+    toast.classList.add("opacity-100", "translate-y-0");
+
+    toastTimer = window.setTimeout(() => {
+      toast.classList.remove("opacity-100", "translate-y-0");
+      toast.classList.add("opacity-0", "-translate-y-2");
+    }, durationMs);
+  };
+
+  const resetLockout = (): void => {
     try {
       localStorage.removeItem(STORAGE_KEYS.LOCKOUT_STATE);
-    } catch {
-      // LocalStorage access
+    } catch (err) {
+      console.error("Failed to clear lockout state:", err);
     }
     spinButton.disabled = false;
-    spinText.textContent = "PUTAR RODA";
+    spinText.textContent = "PUTAR RODA KEBERUNTUNGAN";
     spinHelperText.textContent = "1 kesempatan per pengunjung booth";
-    spinHelperText.className = "text-xs text-stone-500 font-normal";
+    spinHelperText.className = "text-xs text-[#786E5E] font-normal";
+    modalManager.hide();
   };
 
   // 4. Initialize Spin Controller
@@ -146,19 +165,41 @@ function initApplication(): void {
     void triggerSpin();
   });
 
-  // Keyboard shortcut: Spacebar triggers spin when not locked out
-  window.addEventListener("keydown", (e) => {
+  // Global Keyboard Shortcuts
+  window.addEventListener("keydown", (e: KeyboardEvent) => {
+    const isCtrlOrMeta = e.ctrlKey || e.metaKey;
+    const isKeyB = e.code === "KeyB" || e.key === "b" || e.key === "B";
+
+    // Operator Hotkey: CTRL + B (or CMD + B) resets session for next visitor
+    if (isCtrlOrMeta && isKeyB) {
+      e.preventDefault();
+
+      if (spinController.isBusy()) {
+        showToast("⚠️ Tunggu putaran roda selesai");
+        return;
+      }
+
+      resetLockout();
+      showToast("✓ Sesi direset untuk peserta baru (Ctrl+B)");
+      return;
+    }
+
+    // Visitor Shortcut: Spacebar triggers spin when eligible
     if (e.code === "Space" && e.target === document.body && !spinController.isBusy() && !checkLockoutState()) {
       e.preventDefault();
       void triggerSpin();
     }
   });
 
-  // Booth Operator Reset Button (for next visitor)
+  // Booth Operator Reset Button (Click Handler)
   resetKioskBtn.addEventListener("click", () => {
-    if (confirm("Reset sesi untuk pengunjung booth berikutnya?")) {
-      resetLockout();
+    if (spinController.isBusy()) {
+      showToast("⚠️ Tunggu putaran roda selesai");
+      return;
     }
+
+    resetLockout();
+    showToast("✓ Sesi direset untuk peserta baru");
   });
 
   clearHistoryBtn.addEventListener("click", () => {
